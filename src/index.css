@@ -6,6 +6,8 @@
   --color-primary: #c1c79e;
   --color-theme-white: #feffff;
   --color-secondary-100: #344e3a;
+  --color-secondary-300: #3d5d63;
+  --color-secondary-400: #0c353c;
   --color-secondary-500: #002115;
   --font-inter: "Inter", sans-serif;
 }
@@ -28,6 +30,14 @@ body {
 
 .section_sub_title {
   @apply text-[#F9FAFB] text-center text-lg font-normal leading-[150%];
+}
+
+.gradient_circle {
+  @apply w-[328px] h-[328px] rounded-full bg-[#C1C79E66] blur-[150px] absolute;
+}
+
+.small_btn {
+  @apply flex w-[121px] h-12 py-2 px-2.5 justify-center items-center gap-2.5 rounded-2xl bg-primary hover:bg-[#a9b469] transition duration-300 text-[#051619] text-base font-semibold leading-6;
 }
 
 /* 
