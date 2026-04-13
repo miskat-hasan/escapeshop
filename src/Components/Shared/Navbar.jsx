@@ -27,7 +27,7 @@ const Navbar = () => {
   ];
   return (
     <div className="w-full bg-indigo-50">
-      <div className="flex w-[1292px] mx-auto py-2 px-4 justify-between items-center rounded-lg border-[0.4px] border-solid border-[#C1C79E] bg-[#3d3d3d33] absolute top-6  left-1/2 right-1/2 -translate-x-1/2 z-999">
+      <div className="flex w-[1292px] mx-auto py-2 px-4 justify-between items-center rounded-lg border-[0.4px] border-solid border-[#5b5f41] bg-[#3d3d3d33] absolute top-6  left-1/2 right-1/2 -translate-x-1/2 z-999 backdrop-blur-[10px]">
         {/* logo */}
         <Link to={'/'} className="w-[67px] h-[75px] shrink-0 aspect-[67/75]">
           <img src="/logo.png" alt="logo" className="size-full" />

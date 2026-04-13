@@ -13,14 +13,14 @@ import Footer from '../../Components/Shared/Footer'
 const Home = () => {
   return (
     <div>
-      {/* <Navbar />
+      <Navbar />
       <HeroSection />
       <ChooseYourVibe />
       <AboutUs />
       <FeaturedProducts />
       <TopReserve />
       <BudgetFriendly />
-      <CustomerReview /> */}
+      <CustomerReview />
       <ContactInformation />
       <Footer />
     </div>
