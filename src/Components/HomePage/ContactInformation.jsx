@@ -3,8 +3,8 @@ import { LocationSVG, MailSVG, PhoneSVG } from "../Svg/SvgContainer";
 
 const ContactInformation = () => {
   return (
-    <div className="py-14 my-14 relative overflow-hidden">
-      <div className="max-w-[1044px] mx-auto flex items-center justify-between">
+    <div className="py-14 mt-14 mb-28 relative overflow-hidden">
+      <div className="max-w-[1044px] mx-auto flex max-md:flex-col items-center justify-between">
         {/* left side */}
         <div className="space-y-10">
           <h3 className="text-white text-[32px] font-semibold leading-[120%]">
