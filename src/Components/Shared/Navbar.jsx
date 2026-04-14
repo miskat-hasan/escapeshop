@@ -3,14 +3,15 @@ import { Link } from "react-router-dom";
 import { CartSVG, NotificationSVG, SearchSVG } from "../Svg/SvgContainer";
 
 const Navbar = () => {
+  
   const navLinks = [
     {
       name: "Home",
       path: "/",
     },
     {
-      name: "Product",
-      path: "/product",
+      name: "Products",
+      path: "/products",
     },
     {
       name: "About Us",

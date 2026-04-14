@@ -1,19 +1,16 @@
-import React from 'react'
-import HeroSection from '../../Components/HomePage/HeroSection'
-import Navbar from '../../Components/Shared/Navbar'
-import ChooseYourVibe from '../../Components/HomePage/ChooseYourVibe'
-import AboutUs from '../../Components/HomePage/AboutUs'
-import FeaturedProducts from '../../Components/HomePage/FeaturedProducts'
-import TopReserve from '../../Components/HomePage/TopReserve'
-import BudgetFriendly from '../../Components/HomePage/BudgetFriendly'
-import CustomerReview from '../../Components/HomePage/CustomerReview'
-import ContactInformation from '../../Components/HomePage/ContactInformation'
-import Footer from '../../Components/Shared/Footer'
+import React from "react";
+import HeroSection from "../../Components/HomePage/HeroSection";
+import ChooseYourVibe from "../../Components/HomePage/ChooseYourVibe";
+import AboutUs from "../../Components/HomePage/AboutUs";
+import FeaturedProducts from "../../Components/HomePage/FeaturedProducts";
+import TopReserve from "../../Components/HomePage/TopReserve";
+import BudgetFriendly from "../../Components/HomePage/BudgetFriendly";
+import CustomerReview from "../../Components/HomePage/CustomerReview";
+import ContactInformation from "../../Components/Common/ContactInformation";
 
 const Home = () => {
   return (
     <div>
-      <Navbar />
       <HeroSection />
       <ChooseYourVibe />
       <AboutUs />
@@ -22,9 +19,8 @@ const Home = () => {
       <BudgetFriendly />
       <CustomerReview />
       <ContactInformation />
-      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

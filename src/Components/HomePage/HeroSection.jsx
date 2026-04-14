@@ -11,7 +11,6 @@ const HeroSection = () => {
     }
   }, []);
   return (
-    // <div className="relative h-[900px] flex items-center justify-center bg-cover bg-center bg-[linear-gradient(111deg,rgba(0,33,21,0.8)_45.72%,rgba(12,53,60,0.16)_98.54%),url('/hero-bg.mp4')]">
     <div className="relative h-[900px] w-full overflow-hidden flex items-center justify-center">
       <video
         ref={videoRef}
@@ -49,7 +48,7 @@ const HeroSection = () => {
           </Link>
         </div>
       </div>
-      <div className="absolute w-full h-[180px] -bottom-3 bg-[url('/hero-bottom-gradient.png')] bg-no-repeat"></div>
+      <div className="absolute w-full h-[180px] -bottom-3 bg-[url('/hero-bottom-gradient.png')] bg-no-repeat" />
     </div>
   );
 };
