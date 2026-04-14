@@ -11,6 +11,11 @@ import Verify_identity from "../Pages/AuthPages/Verify_identity";
 import Reset_password from "../Pages/AuthPages/Reset_password";
 import RegisterSuccessfully from "../Pages/AuthPages/RegisterSuccessfully";
 import PasswordUpdatedSuccessfully from "../Pages/AuthPages/PasswordUpdatedSuccessfully";
+import AboutUsPage from "../Pages/AboutUsPage";
+import CustomerReviewPage from "../Pages/CustomerReviewPage";
+import ContactUsPage from "../Pages/ContactUsPage";
+import ProductsPage from "../Pages/ProductsPage";
+import SingleProductPage from "../Pages/SingleProductPage";
 // import DashboardLayout from "../Layout/DashboardLayout";
 // import Overview from "../Pages/DashboardPages/Overview/Overview";
 // import Orders from "../Pages/DashboardPages/Orders/Orders";
@@ -36,14 +41,26 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
       },
-      // {
-      //   path: "/choose-sticker",
-      //   element: <ChooseSticker />,
-      // },
-      // {
-      //   path: "/sticker-type/:id",
-      //   element: <StickerType />,
-      // },
+      {
+        path: "/products",
+        element: <ProductsPage />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUsPage />,
+      },
+      {
+        path: "/customer-review",
+        element: <CustomerReviewPage />,
+      },
+      {
+        path: "/contact-us",
+        element: <ContactUsPage />,
+      },
+      {
+        path: "/products/:id",
+        element: <SingleProductPage />,
+      },
       // {
       //   path: "/sticker-combo",
       //   element: <StickerCombo />,
