@@ -42,26 +42,32 @@ const AboutUs = () => {
         with a mission to provide trusted, legal herbal alternatives that
         prioritize your wellbeing.
       </p>
-      <div className="grid grid-cols-2 gap-8 mt-12">
-        {contents?.map((item, index) => (
-          <div
-            key={index}
-            className="flex p-8 flex-col items-center gap-4 flex-1 rounded-2xl bg-[#C1C79E33] border border-[#777a64]"
-          >
-            <div className="flex w-16 h-16 px-4 justify-center items-center rounded-full bg-[#0C353C33] border border-[#777a64]">
-              <item.icon />
-            </div>
-            <div className="space-y-2 text-center">
-              <h5 className="100% Natural">{item?.title}</h5>
-              <p className="text-[#B4C0C3] text-center text-base font-normal leading-6">
-                {item?.description}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <AboutUsCards />
     </section>
   );
 };
 
 export default AboutUs;
+
+export const AboutUsCards = () => {
+  return (
+    <div className="grid grid-cols-2 gap-8 mt-12">
+      {contents?.map((item, index) => (
+        <div
+          key={index}
+          className="flex p-8 flex-col items-center gap-4 flex-1 rounded-2xl bg-[#C1C79E33] border border-[#777a64]"
+        >
+          <div className="flex w-16 h-16 px-4 justify-center items-center rounded-full bg-[#0C353C33] border border-[#777a64]">
+            <item.icon />
+          </div>
+          <div className="space-y-2 text-center">
+            <h5 className="100% Natural">{item?.title}</h5>
+            <p className="text-[#B4C0C3] text-center text-base font-normal leading-6">
+              {item?.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
