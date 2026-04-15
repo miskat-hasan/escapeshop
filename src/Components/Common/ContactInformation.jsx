@@ -4,7 +4,7 @@ import { LocationSVG, MailSVG, PhoneSVG } from "../Svg/SvgContainer";
 const ContactInformation = () => {
   return (
     <div className="py-14 mt-14 mb-28 relative overflow-hidden">
-      <div className="max-w-[1044px] mx-auto flex max-md:flex-col items-center justify-between">
+      <div className="max-w-[1044px] mx-auto flex max-md:flex-col items- justify-between">
         {/* left side */}
         <div className="space-y-10">
           <h3 className="text-white text-[32px] font-semibold leading-[120%]">
@@ -20,13 +20,13 @@ const ContactInformation = () => {
                 <h5 className="text-white text-2xl font-normal leading-[150%]">
                   Email
                 </h5>
-                <p className="text-white text-base font-normal leading-6">
+                <a href="mailto:hello@escapeshop.com" className="text-white text-base font-normal leading-6 hover:text-primary transition duration-300">
                   hello@escapeshop.com
-                </p>
+                </a>
               </div>
             </div>
             {/* phone */}
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <div className="w-10 h-10 aspect-square rounded bg-transparent border border-primary/20 flex items-center justify-center">
                 <PhoneSVG />
               </div>
@@ -38,10 +38,10 @@ const ContactInformation = () => {
                   +1 (555) 123-4567
                 </p>
               </div>
-            </div>
+            </div> */}
 
             {/* address */}
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <div className="w-10 h-10 aspect-square rounded bg-transparent border border-primary/20 flex items-center justify-center">
                 <LocationSVG />
               </div>
@@ -53,7 +53,7 @@ const ContactInformation = () => {
                   123 Community Drive, Food City, FC 12345
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* right side -- form */}
