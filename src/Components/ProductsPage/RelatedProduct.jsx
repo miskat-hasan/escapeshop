@@ -2,7 +2,7 @@ import React from "react";
 import Marquee from "react-fast-marquee";
 import ProductCard from "./ProductCard";
 
-const RelatedProducts = () => {
+const RelatedProduct = () => {
   return (
     <div className="container pb-[110px] pt-[60px]">
       <h4 className="text-white text-[24px] font-semibold leading-[150%]">
@@ -23,4 +23,4 @@ const RelatedProducts = () => {
   );
 };
 
-export default RelatedProducts;
+export default RelatedProduct;

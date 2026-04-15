@@ -54,9 +54,9 @@ const Navbar = () => {
             <button className="cursor-pointer">
               <SearchSVG />
             </button>
-            <button className="cursor-pointer">
+            <Link to={'/add-to-cart'} className="cursor-pointer">
               <CartSVG />
-            </button>
+            </Link>
             <button className="cursor-pointer">
               <NotificationSVG />
             </button>

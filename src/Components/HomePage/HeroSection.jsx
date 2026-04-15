@@ -35,13 +35,13 @@ const HeroSection = () => {
         </p>
         <div className="flex items-center gap-4 mt-12 justify-center">
           <Link
-            to={""}
+            to={"/products"}
             className="flex py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-6"
           >
-            Show Now
+            Shop Now
           </Link>
           <Link
-            to={""}
+            to={"/about-us"}
             className="flex py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#0C353C] text-[#FEFFFF] text-center text-base font-medium leading-6"
           >
             Learn More

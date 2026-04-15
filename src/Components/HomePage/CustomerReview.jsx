@@ -46,7 +46,7 @@ const CustomerReview = () => {
 
       {/* button */}
       <div className="mt-8 flex justify-center">
-        <Link to={""} className="small_btn">
+        <Link to={"/customer-review"} className="small_btn">
           View All
         </Link>
       </div>

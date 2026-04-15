@@ -120,12 +120,12 @@ const Footer = () => {
               >
                 hello@escapeshop.com
               </a>
-              <a
+              {/* <a
                 href="tel: +1 (555) 123-4567"
                 className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300"
               >
                 +1 (555) 123-4567
-              </a>
+              </a> */}
             </div>
           </div>
         </div>

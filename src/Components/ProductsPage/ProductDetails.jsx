@@ -36,7 +36,7 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen text-white px-6 py-10 lg:px-16 pt-[180px]">
-      {/* bg-[#012d1d] */}
+      
       <div className="container">
         <div className="flex items-center gap-2 mb-8">
           <span className="text-white text-[18px] font-normal leading-[150%]">
