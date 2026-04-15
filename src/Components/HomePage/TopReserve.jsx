@@ -26,7 +26,7 @@ const TopReserve = () => {
         </div>
         {/* button */}
         <div className="mt-8 flex justify-center">
-          <Link to={''} className="small_btn">View All</Link>
+          <Link to={'/products'} className="small_btn">View All</Link>
         </div>
       </div>
     </div>

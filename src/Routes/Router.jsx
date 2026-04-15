@@ -16,6 +16,8 @@ import CustomerReviewPage from "../Pages/CustomerReviewPage";
 import ContactUsPage from "../Pages/ContactUsPage";
 import ProductsPage from "../Pages/ProductsPage";
 import SingleProductPage from "../Pages/SingleProductPage";
+import AddToCartPage from "../Pages/AddToCartPage";
+import CustomerInformationPage from "../Pages/CustomerInformationPage";
 // import DashboardLayout from "../Layout/DashboardLayout";
 // import Overview from "../Pages/DashboardPages/Overview/Overview";
 // import Orders from "../Pages/DashboardPages/Orders/Orders";
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: "/products/:id",
         element: <SingleProductPage />,
+      },
+      {
+        path: "/add-to-cart",
+        element: <AddToCartPage />,
+      },
+      {
+        path: "/order-summary",
+        element: <CustomerInformationPage />,
       },
       // {
       //   path: "/sticker-combo",
