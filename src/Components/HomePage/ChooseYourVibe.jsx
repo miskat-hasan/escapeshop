@@ -46,7 +46,7 @@ const ChooseYourVibe = () => {
             key={index}
             className="flex w-[239.2px] p-4 flex-col items-center gap-4 shrink-0 rounded-2xl border-[0.4px] border-solid border-[#4c751d] bg-[linear-gradient(112deg,#C1C79E_3.64%,rgba(91,102,27,0.80)_98.65%)]"
           >
-            <div className="flex w-12 h-12 p-2 items-start gap-[10px] rounded-lg bg-[#0C353C]">
+            <div className="flex w-12 h-12 p-2 items-start gap-[10px] rounded-full bg-[#0C353C]">
               <item.icon />
             </div>
             <div className="space-y-2">

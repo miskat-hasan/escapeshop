@@ -1,127 +1,75 @@
-import React, { useState } from "react";
-import Navbar from "../Shared/Navbar";
-import Footer from "../Shared/Footer";
+import React from "react";
 import { NavLink, Outlet, ScrollRestoration } from "react-router-dom";
+
 import {
-  DFiveSvg,
-  DFourSvg,
-  DOneSvg,
-  DSevenSvg,
-  DSixSvg,
-  DThreeSvg,
-  DTwoSvg,
-  UploadSvg,
-} from "../Shared/Svg/SvgContainer";
-import coverBg from "../assets/cover.png";
-import { useLogout } from "../Hooks/api/auth_api";
-import { ImSpinner9 } from "react-icons/im";
-import { useUpdateUserInfo } from "../Hooks/api/dashboard_api";
-import useAuth from "../Hooks/useAuth";
-import BannerModal from "../Components/Modal/BannerModal";
-import Modal from "../Components/Common/Modal";
+  CartSVG,
+  LogoutSVG,
+  OrderHistorySVG,
+  SettingsSVG,
+  UserInfoSVG,
+} from "../Components/Svg/SvgContainer";
+import Navbar from "../Components/Shared/Navbar";
+import Footer from "../Components/Shared/Footer";
 
 const navLinks = [
   {
-    icon: <DOneSvg />,
-    title: "Start New Mission",
-    text: "Create custom stickers",
-    path: "/choose-sticker",
+    icon: UserInfoSVG,
+    label: "Personal Information",
+    path: "/personal-information",
   },
   {
-    icon: <DTwoSvg />,
-    title: "Dashboard",
-    text: "Mission overview",
-    path: "/dashboard",
+    icon: CartSVG,
+    label: "My Orders",
+    path: "/orders",
   },
   {
-    icon: <DThreeSvg />,
-    title: "Orders",
-    text: "Manage finances",
-    path: "/dashboard/orders",
+    icon: OrderHistorySVG,
+    label: "Order History",
+    path: "/order-history",
   },
   {
-    icon: <DFourSvg />,
-    title: "Designs",
-    text: "Manage designs",
-    path: "/dashboard/designs",
+    icon: SettingsSVG,
+    label: "Settings",
+    path: "/settings",
   },
   {
-    icon: <DFiveSvg />,
-    title: "Support",
-    text: "Contact ground crew",
-    path: "/dashboard/support",
-  },
-  {
-    icon: <DSixSvg />,
-    title: "Settings",
-    text: "Manage account",
-    path: "/dashboard/settings",
+    icon: LogoutSVG,
+    label: "Logout",
+    path: "/logout",
   },
 ];
 
 const DashboardLayout = () => {
-  const { user } = useAuth();
-  const { mutate: logoutMutation, isPending } = useLogout();
-  const { mutate: updateMutation, isPending: isUpdating } = useUpdateUserInfo();
-  const [showBannerModal, setShowBannerModal] = useState(false);
+  // const { user } = useAuth();
 
   return (
     <>
       <Navbar />
       <div>
-        <div className="container flex gap-5 xl:gap-7 pt-7 xl:pt-14 pb-5 xl:pb-10">
+        <div className="container flex gap-5 xl:gap-7 pt-40 pb-5 xl:pb-10">
           {/* Sidebar */}
-          <aside className="hidden lg:block w-[280px] xl:w-[350px] 2xl:w-[387px] shrink-0 space-y-4 xl:space-y-5">
-            {navLinks?.map(link => (
+          <aside className="hidden w-[247px] h-fit shrink-0 lg:flex p-4 flex-col items-start gap-6 rounded-2xl bg-[#0C353C]/20 border border-secondary-100">
+            {navLinks?.map((link) => (
               <NavLink
-                key={link?.title}
-                to={link?.path}
+                key={link?.label}
+                to={`/dashboard${link?.path}`}
                 end
                 className={({ isActive }) =>
-                  `flex gap-4 items-center border border-primary-pink rounded-xl xl:rounded-2xl px-4 py-3 xl:p-4 2xl:p-5 cursor-pointer duration-500 transition hover:scale-105 ${isActive ? "bg-primary-pink" : "hover:bg-primary-pink/20"}`
+                  `flex p-3 items-center gap-2 rounded-xl border-[0.4px] border-[#5C787C] bg-[#F6F6F6]/10 w-full cursor-pointer duration-500 transition hover:bg-primary text-[#E7EBEC] group text-base leading-[150%] hover:text-black ${isActive && "bg-primary text-black"}`
                 }
               >
-                <span>{link?.icon}</span>
-                <div>
-                  <h3 className="font-medium text-[15px] xl:text-base">
-                    {link?.title}
-                  </h3>
-                  <span className="text-sm xl:text-[15px] text-off-white">
-                    {link?.text}
-                  </span>
-                </div>
+                <link.icon
+                  className={"group-hover:text-black transition duration-300"}
+                />
+                <h3 className="">{link?.label}</h3>
               </NavLink>
             ))}
-
-            {/* Logout btn */}
-            <button
-              disabled={isPending}
-              onClick={() => logoutMutation()}
-              className="border border-primary-pink rounded-xl xl:rounded-2xl px-4 py-3 xl:p-4 2xl:p-5 cursor-pointer duration-500 transition hover:scale-105 hover:bg-primary-pink/20 w-full disabled:cursor-not-allowed disabled:opacity-80"
-            >
-              {isPending ? (
-                <span className="w-full flex gap-3 items-center justify-center">
-                  <ImSpinner9 className="animate-spin" />
-                  Processing...
-                </span>
-              ) : (
-                <p className="flex gap-4 items-center w-full">
-                  <DSevenSvg />
-                  <div>
-                    <h3 className="font-medium text-left">Log Out</h3>
-                    <span className="text-[15px] text-off-white">
-                      End session
-                    </span>
-                  </div>
-                </p>
-              )}
-            </button>
           </aside>
 
           {/* Outlet */}
           <main className="grow">
             {/* Profile info */}
-            {isUpdating ? (
+            {/* {isUpdating ? (
               <div className="h-36 md:h-40 bg-no-repeat bg-center bg-cover border border-gray-900 bg-gray-900 bg-blend-overlay rounded-xl flex gap-5 px-10 items-center justify-center mb-5 lg:mb-10">
                 <div>
                   <div className="animate-spin rounded-full size-7 mx-auto border-t-2 border-white border-solid" />
@@ -172,32 +120,14 @@ const DashboardLayout = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
             <Outlet />
           </main>
         </div>
-
-        {/* Overlay */}
-        <div className="fixed -left-48 bottom-0 -z-20 w-[480px] md:w-[680px] 2xl:w-[880px] h-[300px] md:h-[350px] 2xl:h-[380px]  rotate-[-46.492deg] rounded-[741.5px] bg-[#db409846] blur-[98.25px]" />
-
-        <div className="fixed -right-48 bottom-0 -z-20 w-[480px] md:w-[680px] 2xl:w-[880px] h-[300px] md:h-[350px] 2xl:h-[380px] rotate-[46.492deg] rounded-[741.5px] bg-[#db409846] blur-[98.25px]" />
       </div>
       <Footer />
       <ScrollRestoration />
-
-      {/* Modal */}
-      <Modal
-        className="max-w-3xl"
-        open={showBannerModal}
-        onClose={() => setShowBannerModal(false)}
-      >
-        <BannerModal
-          onClose={() => setShowBannerModal(false)}
-          updateMutation={updateMutation}
-          isUpdating={isUpdating}
-        />
-      </Modal>
     </>
   );
 };

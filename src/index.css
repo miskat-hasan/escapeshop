@@ -2,6 +2,30 @@
 
 @import "tailwindcss";
 
+
+@font-face {
+  font-family: 'Police1';
+  src: url('/font/police-1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Police2';
+  src: url('/font/police-2.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Police';
+  src: url('/font/police-3.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
   --color-primary: #c1c79e;
   --color-theme-white: #feffff;
@@ -11,6 +35,9 @@
   --color-secondary-500: #002115;
   /* --color-secondary-500: #012d1d; */
   --font-inter: "Inter", sans-serif;
+  --font-police-1: "Police1", sans-serif;
+  --font-police: "Police", sans-serif;
+  --font-police-3: "Police2", sans-serif;
 }
 
 body {
@@ -26,7 +53,7 @@ body {
 }
 
 .section_title {
-  @apply text-[#C1C79E] text-center text-[40px] font-semibold leading-[120%];
+  @apply text-[#C1C79E] text-center text-[40px] leading-[120%] tracking-wide font-police;
 }
 
 .section_sub_title {
