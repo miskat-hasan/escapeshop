@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const ProductCard = () => {
   return (
-    <div className="flex p-4 flex-col items-center gap-6 flex-1 rounded-2xl border-[0.4px] border-[#C1C79E] w-[336px]">
+    <div className="flex p-2 xl:p-4 flex-col items-center gap-3 xl:gap-6 flex-1 rounded-2xl border-[0.4px] border-secondary-100 max-w-[336px] mx-auto">
       {/* Image */}
-      <div className="relative w-[304px] h-[204px] rounded-t-2xl border-t border-x border-solid border-secondary-400 overflow-hidden">
+      <div className="relative max-w-[304px] h-[204px] rounded-t-2xl border-t border-x border-solid border-secondary-400 overflow-hidden">
         <img
           src="/product-img.png"
           alt="THCA Flower"
@@ -17,13 +17,13 @@ const ProductCard = () => {
           <CartSVG />
         </div>
         {/* Badge */}
-        <div className="absolute top-3 right-3 flex py-1 px-2 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 text-white text-base font-normal leading-6">
+        <div className="absolute top-3 right-3 flex py-1 px-2 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 text-white text-sm xl:text-base font-normal leading-6">
           Fresh Stock
         </div>
       </div>
 
       {/* Info */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2 xl:gap-4">
         <div className="space-y-1">
           <p className="text-white text-[18px] font-medium leading-[150%]">
             Cheap Indoor THCA Flower Ounce
@@ -43,19 +43,19 @@ const ProductCard = () => {
               .fill(0)
               .map((_, i) => (
                 <span key={i}>
-                  <StarFillSVG />
+                  <StarFillSVG className={'max-xl:size-4'}/>
                 </span>
               ))}
-            <StarSVG />
+            <StarSVG className={'max-xl:size-4'}/>
           </div>
-          <span className="text-white text-xl font-semibold leading-[150%]">
+          <span className="text-white max-sm:text-sm xl:text-xl font-semibold leading-[150%]">
             (320)
           </span>
         </div>
       </div>
 
       {/* button */}
-      <Link to={'/products/1'} className="flex px-8 py-4 justify-center items-center gap-[10px] self-stretch rounded-lg bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-6 cursor-pointer">View Details</Link>
+      <Link to={'/products/1'} className="flex px-8 py-2.5 xl:py-4 justify-center items-center gap-[10px] self-stretch rounded-lg bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-6 cursor-pointer">View Details</Link>
     </div>
   );
 };

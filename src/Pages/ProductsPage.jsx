@@ -12,9 +12,9 @@ const ProductsPage = () => {
   return (
     <div>
       <PageHeader />
-      <div className="container py-20 flex gap-8 justify-between">
+      <div className="container py-20 flex gap-4 xl:gap-8 justify-between">
         {/* filters */}
-        <div className="flex p-4 flex-col items-start rounded-lg border-[0.4px] border-[#C1C79E] h-fit">
+        <div className="flex p-2 xl:p-4 flex-col items-start rounded-lg border-[0.4px] border-[#C1C79E] h-fit">
           <div className="flex p-4 flex-col items-start gap-4 self-stretch border-b-[0.4px] border-[#C1C79E]">
             <div className="flex items-center gap-2">
               <FilterSVG />
@@ -134,7 +134,7 @@ const ProductsPage = () => {
                 View All
               </button>
             </div>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-6">
               {Array(3)
                 .fill(null)
                 ?.map((_, index) => (

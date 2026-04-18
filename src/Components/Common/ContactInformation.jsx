@@ -4,15 +4,15 @@ import { LocationSVG, MailSVG, PhoneSVG } from "../Svg/SvgContainer";
 const ContactInformation = () => {
   return (
     <div className="py-14 mt-14 mb-28 relative overflow-hidden">
-      <div className="max-w-[1044px] mx-auto flex max-md:flex-col items- justify-between">
+      <div className="max-w-[1044px] mx-auto flex max-md:flex-col gap-4 justify-center md:justify-between px-2">
         {/* left side */}
         <div className="space-y-10">
-          <h3 className="text-white text-[32px] font-police tracking-wide leading-[120%]">
+          <h3 className="text-white max-sm:text-left max-md:text-center text-[32px] font-police tracking-wide leading-[120%]">
             Contact Information
           </h3>
           <div className="space-y-8">
             {/* email */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center max-sm:justify-start max-md:justify-center gap-4">
               <div className="w-10 h-10 aspect-square rounded bg-transparent border border-primary/20 flex items-center justify-center">
                 <MailSVG />
               </div>
@@ -57,8 +57,8 @@ const ContactInformation = () => {
           </div>
         </div>
         {/* right side -- form */}
-        <form className="flex max-w-[536px] w-full p-6 flex-col items-start gap-4 rounded-2xl bg-white/10 border border-[#3a5237]">
-          <div className="flex items-center gap-4 justify-between w-full">
+        <form className="flex sm:max-w-[536px] mx-auto w-full p-3 sm:p-6 flex-col items-start gap-4 rounded-2xl bg-white/10 border border-[#3a5237]">
+          <div className="flex max-sm:flex-col sm:items-center gap-4 justify-between w-full">
             <div className="flex flex-col flex-1 gap-2">
               <label className="text-white text-base font-normal leading-6">
                 Full Name
@@ -90,7 +90,7 @@ const ContactInformation = () => {
               placeholder="Tell us how can we help you...."
             ></textarea>
           </div>
-          <button className="flex h-10 p-[10px] justify-center items-center gap-[10px] self-stretch rounded-lg border border-[#5C787C] bg-primary hover:bg-[#a9b469] transition duration-300 text-black cursor-pointer text-base font-medium leading-6">
+          <button className="flex h-10 p-[10px] justify-center items-center gap-[10px] self-stretch rounded-lg border border-[#5C787C] bg-primary hover:bg-[#a9b469] transition duration-300 text-black cursor-pointer max-sm:text-sm font-medium leading-6">
             Send message
           </button>
         </form>

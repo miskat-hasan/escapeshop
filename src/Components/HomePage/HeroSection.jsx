@@ -25,30 +25,30 @@ const HeroSection = () => {
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0  z-10 bg-[linear-gradient(111deg,rgba(0,33,21,0.8)_45.72%,rgba(12,53,60,0.16)_98.54%)]" />
-      <div className="relative z-10 p-8">
-        <h1 className="text-white text-center font-police-1 text-[64px] leading-[120%] mb-8">
+      <div className="relative z-10 px-2 md:p-8">
+        {/* <h1 className="text-white text-center font-police-1 text-[64px] leading-[120%] mb-8">
+          Find Balance in Every Moment
+        </h1> */}
+        <h1 className="text-white text-center font-police text-3xl xs:text-4xl sm:text-[64px] leading-[120%] mb-8">
           Find Balance in Every Moment
         </h1>
-        <h1 className="text-white text-center font-police text-[64px] leading-[120%] mb-8">
+        {/* <h1 className="text-white text-center font-police-3 text-[64px] leading-[120%] mb-8">
           Find Balance in Every Moment
-        </h1>
-        <h1 className="text-white text-center font-police-3 text-[64px] leading-[120%] mb-8">
-          Find Balance in Every Moment
-        </h1>
-        <p className="text-[#B4C0C3] text-center text-2xl font-normal leading-9 max-w-[658px] mx-auto">
+        </h1> */}
+        <p className="text-[#B4C0C3] text-center text-lg sm:text-2xl font-normal sm:leading-9 max-w-[658px] mx-auto">
           Discover ethically sourced. Legal herbal smoking blends and wellness
           essentials crafted for the modern souls.
         </p>
         <div className="flex items-center gap-4 mt-12 justify-center">
           <Link
             to={"/products"}
-            className="flex py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-6"
+            className="flex py-2 sm:py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#C1C79E] text-[#051619] text-center max-sm:text-sm font-medium leading-6"
           >
             Shop Now
           </Link>
           <Link
             to={"/about-us"}
-            className="flex py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#0C353C] text-[#FEFFFF] text-center text-base font-medium leading-6"
+            className="flex py-2 sm:py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#0C353C] text-[#FEFFFF] text-center max-sm:text-sm font-medium leading-6"
           >
             Learn More
           </Link>
