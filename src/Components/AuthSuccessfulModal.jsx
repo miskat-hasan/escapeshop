@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const AuthSuccessfulModal = ({title, subTitle, buttonText, buttonLink}) => {
   return (
     <div className="relative min-h-screen bg-cover bg-center auth-bg">
-      <div className="relative z-10 p-8 flex items-center justify-center w-full min-h-screen">
-        <div className="flex w-[500px] p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500">
+      <div className="relative z-10 px-2 py-8 sm:p-8 flex items-center justify-center w-full min-h-screen">
+        <div className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500">
           {/* logo & title */}
           <div className="flex flex-col items-center gap-4 self-stretch">
             <figure>

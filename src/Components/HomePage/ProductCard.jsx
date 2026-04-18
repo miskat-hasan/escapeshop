@@ -3,9 +3,9 @@ import { CartSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 
 const ProductCard = () => {
   return (
-    <div className="flex w-[305px] flex-col items-start gap-4 rounded-2xl border border-solid border-secondary-400 bg-secondary-500">
+    <div className="flex min-w-[280px] max-w-[350px] w-full flex-col items-start gap-4 rounded-2xl border border-solid border-secondary-400 bg-secondary-500">
       {/* Image */}
-      <div className="relative w-[305px] h-[204px] rounded-t-2xl border-t border-x border-solid border-secondary-400 overflow-hidden">
+      <div className="relative w-full h-[204px] rounded-t-2xl border-t border-x border-solid border-secondary-400 overflow-hidden">
         <img
           src="/product-img.png"
           alt="THCA Flower"
@@ -16,7 +16,7 @@ const ProductCard = () => {
           <CartSVG />
         </div>
         {/* Badge */}
-        <div className="absolute top-3 right-3 flex py-1 px-2 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 text-white text-base font-normal leading-6">
+        <div className="absolute top-3 right-3 flex py-1 px-2 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 text-white max-sm:text-sm font-normal leading-6">
           Fresh Stock
         </div>
       </div>
@@ -40,12 +40,12 @@ const ProductCard = () => {
               .fill(0)
               .map((_, i) => (
                 <span key={i}>
-                  <StarFillSVG />
+                  <StarFillSVG className={'max-sm:size-4'}/>
                 </span>
               ))}
-            <StarSVG />
+            <StarSVG className={'max-sm:size-4'} />
           </div>
-          <span className="text-white text-xl font-semibold leading-[150%]">
+          <span className="text-white sm:text-xl font-semibold leading-[150%]">
             (320)
           </span>
         </div>

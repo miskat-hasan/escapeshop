@@ -4,13 +4,13 @@ const MissionVision = () => {
   return (
     <div className="pt-20 container pb-16 space-y-[110px]">
       {/* our story */}
-      <div className="flex items-center gap-[77px]">
+      <div className="flex max-lg:flex-col items-center gap-8 lg:gap-6 xl:gap-[77px]">
         {/* left side - image */}
-        <div className="flex-1 w-[622px] h-[415px] rounded-2xl border-[0.4px] border-primary bg-[url('/about-us/our-story.png')] bg-center bg-cover bg-no-repeat shadow-[0_12px_24px_-4px_rgba(145,158,171,0.16)]" />
+        <div className="lg:flex-1 max-w-[622px] w-full h-[300px] sm:h-[350px] lg:h-[415px] rounded-2xl border-[0.4px] border-secondary-100 bg-[url('/about-us/our-story.png')] bg-center bg-cover bg-no-repeat shadow-[0_12px_24px_-4px_rgba(145,158,171,0.16)]" />
 
         {/* right side - text content */}
         <div className="flex-1 space-y-4">
-          <h3 className="text-primary text-[40px] font-semibold leading-[120%]">
+          <h3 className="text-primary text-4xl md:text-[40px] leading-[120%] font-police">
             Our Story
           </h3>
           <p className="text-[#F9FAFB] text-base font-normal leading-6">
@@ -34,10 +34,10 @@ const MissionVision = () => {
       </div>
 
       {/* Our Mission */}
-      <div className="flex items-center gap-[77px]">
+      <div className="flex max-lg:flex-col-reverse items-center gap-8 lg:gap-6 xl:gap-[77px]">
         {/* left side - text content */}
         <div className="flex-1 space-y-4">
-          <h3 className="text-primary text-[40px] font-semibold leading-[120%]">
+          <h3 className="text-primary text-4xl md:text-[40px] font-police leading-[120%]">
             Our Mission
           </h3>
           <p className="text-[#F9FAFB] text-base font-normal leading-6">
@@ -53,17 +53,17 @@ const MissionVision = () => {
           </p>
         </div>
         {/* right side - image */}
-        <div className="flex-1 w-[622px] h-[415px] rounded-2xl border-[0.4px] border-primary bg-[url('/about-us/our-mission.png')] bg-center bg-cover bg-no-repeat shadow-[0_12px_24px_-4px_rgba(145,158,171,0.16)]" />
+        <div className="lg:flex-1 max-w-[622px] w-full h-[300px] sm:h-[350px] lg:h-[415px] rounded-2xl border-[0.4px] border-secondary-100 bg-[url('/about-us/our-mission.png')] bg-center bg-cover bg-no-repeat shadow-[0_12px_24px_-4px_rgba(145,158,171,0.16)]" />
       </div>
 
       {/* our vision */}
-      <div className="flex items-center gap-[77px]">
+      <div className="flex max-lg:flex-col items-center gap-8 lg:gap-6 xl:gap-[77px]">
         {/* left side - image */}
-        <div className="flex-1 w-[622px] h-[415px] rounded-2xl border-[0.4px] border-primary bg-[url('/about-us/our-vision.png')] bg-center bg-cover bg-no-repeat shadow-[0_12px_24px_-4px_rgba(145,158,171,0.16)]" />
+        <div className="lg:flex-1 max-w-[622px] w-full h-[300px] sm:h-[350px] lg:h-[415px] rounded-2xl border-[0.4px] border-secondary-100 bg-[url('/about-us/our-vision.png')] bg-center bg-cover bg-no-repeat shadow-[0_12px_24px_-4px_rgba(145,158,171,0.16)]" />
 
         {/* right side - text content */}
         <div className="flex-1 space-y-4">
-          <h3 className="text-primary text-[40px] font-semibold leading-[120%]">
+          <h3 className="text-primary text-4xl md:text-[40px] font-police leading-[120%]">
             Our Vision
           </h3>
           <p className="text-[#F9FAFB] text-base font-normal leading-6">
