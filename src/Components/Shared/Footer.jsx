@@ -48,7 +48,7 @@ const Footer = () => {
         <div className="flex justify-between">
           {/* about us */}
           <div className="flex w-[460px] flex-col items-start gap-8 shrink-0">
-            <h3 className="text-primary text-center font-['Post_No_Bills_Colombo_ExtraBold'] text-2xl font-extrabold leading-[150%]">
+            <h3 className="text-primary text-center text-2xl tracking-wide leading-[150%] font-police">
               ESCAPESHOP
             </h3>
             <div className="space-y-8">

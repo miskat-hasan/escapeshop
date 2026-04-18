@@ -26,7 +26,13 @@ const HeroSection = () => {
       {/* Gradient Overlay */}
       <div className="absolute inset-0  z-10 bg-[linear-gradient(111deg,rgba(0,33,21,0.8)_45.72%,rgba(12,53,60,0.16)_98.54%)]" />
       <div className="relative z-10 p-8">
-        <h1 className="text-white text-center font-['Playfair_Display'] text-[64px] font-semibold leading-[120%] mb-8">
+        <h1 className="text-white text-center font-police-1 text-[64px] leading-[120%] mb-8">
+          Find Balance in Every Moment
+        </h1>
+        <h1 className="text-white text-center font-police text-[64px] leading-[120%] mb-8">
+          Find Balance in Every Moment
+        </h1>
+        <h1 className="text-white text-center font-police-3 text-[64px] leading-[120%] mb-8">
           Find Balance in Every Moment
         </h1>
         <p className="text-[#B4C0C3] text-center text-2xl font-normal leading-9 max-w-[658px] mx-auto">
