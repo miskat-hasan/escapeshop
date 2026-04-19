@@ -32,7 +32,7 @@ export const useAllCoverImages = () => {
   });
 };
 
-// Update user info
+// Update user info == me
 export const useUpdateUserInfo = () => {
   const queryClient = useQueryClient();
 
@@ -40,7 +40,7 @@ export const useUpdateUserInfo = () => {
     method: "post",
     key: ["update-userinfo"],
     isPrivate: true,
-    endpoint: "/api/auth/update-profile",
+    endpoint: "/api/users/update",
     onSuccess: res => {
       if (res?.success) {
         toast.success(res?.message);

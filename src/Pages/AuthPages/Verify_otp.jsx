@@ -1,16 +1,38 @@
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import OTPInput from "react-otp-input";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+import { useVerifyRegistrationOtp } from "../../Hooks/api/auth_api";
+import { ImSpinner9 } from "react-icons/im";
+import { FiArrowLeftCircle } from "react-icons/fi";
 
 const VerifyOTP = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location?.state?.email;
+  const { setToken } = useAuth();
+
+  const { mutateAsync: verifyOtpMutation, isPending } =
+    useVerifyRegistrationOtp();
+
+  // Form Data
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const payload = { email: decodeURIComponent(email), ...data };
+    await verifyOtpMutation(payload, {
+      onSuccess: (res) => {
+        if (res?.success) {
+          setToken(res?.data?.token);
+          navigate("/auth/register-successfully");
+        }
+      },
+    });
   };
 
   return (
@@ -18,8 +40,14 @@ const VerifyOTP = () => {
       <div className="relative z-10 px-2 py-8 sm:p-8 flex items-center justify-center w-full min-h-screen">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500"
+          className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500 relative"
         >
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute text-primary md:text-lg cursor-pointer font-normal capitalize flex gap-1 items-center hover:-translate-x-2 hover:text-[#d7f5a7] transition duration-300"
+          >
+            <FiArrowLeftCircle className="size-5 md:size-6" />
+          </button>
           {/* logo & title */}
           <div className="flex flex-col items-center gap-4 self-stretch">
             <figure>
@@ -30,7 +58,8 @@ const VerifyOTP = () => {
                 Email Verification OTP
               </h3>
               <p className="text-[#99A1AF] text-center text-base font-normal leading-[150%]">
-                Enter the <span className="text-white">6-digit</span> OTP we sent to your Email to continue.
+                Enter the <span className="text-white">6-digit</span> OTP we
+                sent to your Email to continue.
               </p>
             </div>
           </div>
@@ -78,18 +107,17 @@ const VerifyOTP = () => {
           {/* Button */}
           <button
             type="submit"
-            // disabled={isPending}
+            disabled={isPending}
             className="flex w-full h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
           >
-            {/* {isPending ? (
-                      <span className="w-full flex gap-3 items-center justify-center">
-                        <ImSpinner9 className="animate-spin" />
-                        Processing...
-                      </span>
-                    ) : (
-                      "Continue"
-                    )} */}
-            OTP Verification
+            {isPending ? (
+              <span className="w-full flex gap-3 items-center justify-center">
+                <ImSpinner9 className="animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              "OTP Verification"
+            )}
           </button>
         </form>
       </div>

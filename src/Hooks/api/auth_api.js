@@ -9,7 +9,7 @@ export const useGetUserData = token => {
     method: "get",
     key: ["user", token],
     enabled: !!token,
-    endpoint: "/api/auth/profile",
+    endpoint: "/api/users/profile",
     isPrivate: true,
     queryOptions: {
       refetchInterval: 1000 * 60 * 60, // refetch every hour
@@ -22,7 +22,7 @@ export const useRegister = () => {
   return useApi({
     method: "post",
     key: ["register"],
-    endpoint: "/api/register",
+    endpoint: "/api/users/register",
     onError: err => {
       toast.error(err?.response?.data?.message);
     },
@@ -34,7 +34,7 @@ export const useVerifyRegistrationOtp = () => {
   return useApi({
     method: "post",
     key: ["verify-registration-otp"],
-    endpoint: "/api/verify-otp",
+    endpoint: "/api/users/otp-verify",
     onError: err => {
       toast.error(err?.response?.data?.message);
     },
@@ -50,12 +50,12 @@ export const useLogin = () => {
   return useApi({
     method: "post",
     key: ["login"],
-    endpoint: "/api/login",
+    endpoint: "/api/users/login",
     onSuccess: res => {
       if (res?.success) {
         toast.success(res?.message);
         setToken(res?.data?.token);
-        localStorage.setItem("user", JSON.stringify(res?.data?.user));
+        localStorage.setItem("user", JSON.stringify(res?.data?.email));
         navigate(location?.state ? location?.state : "/dashboard");
       }
     },
@@ -70,7 +70,7 @@ export const useVerifyEmail = () => {
   return useApi({
     method: "post",
     key: ["verify-email"],
-    endpoint: "/api/forgot-password",
+    endpoint: "/api/users/forgot-password",
     onError: err => {
       toast.error(err?.response?.data?.message);
     },
@@ -82,7 +82,7 @@ export const useVerifyOtp = () => {
   return useApi({
     method: "post",
     key: ["verify-otp"],
-    endpoint: "/api/verify-reset-otp",
+    endpoint: "/api/users/otp-verify",
     onError: err => {
       toast.error(err?.response?.data?.message);
     },
@@ -94,7 +94,7 @@ export const useResendOtp = () => {
   return useApi({
     method: "post",
     key: ["resend-otp"],
-    endpoint: "/api/reset-resend-otp",
+    endpoint: "/api/users/resend-otp",
     onSuccess: res => {
       if (res?.success) {
         toast.success(res?.message);
@@ -127,14 +127,14 @@ export const useLogout = () => {
     method: "post",
     key: ["logout"],
     isPrivate: true,
-    endpoint: "/api/auth/logout",
+    endpoint: "/api/users/logout",
     onSuccess: res => {
       if (res?.success) {
         clearToken();
         setUser(null);
         localStorage.removeItem("user");
         toast.success(res?.message);
-        navigate("/auth/signin");
+        navigate("/auth/login");
       }
     },
     onError: err => {

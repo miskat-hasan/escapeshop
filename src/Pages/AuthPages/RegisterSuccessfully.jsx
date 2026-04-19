@@ -8,7 +8,7 @@ const RegisterSuccessfully = () => {
         title={"Your Account Create Successfully"}
         subTitle={"Account successfully Created! Enjoy Exploring."}
         buttonText={"Let’s Start"}
-        buttonLink={"/"}
+        buttonLink={"/dashboard"}
       />
     </div>
   );
