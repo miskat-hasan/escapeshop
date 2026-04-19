@@ -13,7 +13,7 @@ const RelatedProduct = () => {
           {Array(6)
             .fill(null)
             ?.map((_, index) => (
-              <div key={index} className="mx-3">
+              <div key={index} className="mx-1.5 sm:mx-3">
                 <ProductCard />
               </div>
             ))}

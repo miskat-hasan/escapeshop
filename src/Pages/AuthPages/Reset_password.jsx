@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AlertSVG } from "../../Components/Svg/SvgContainer";
+import { FiArrowLeftCircle } from "react-icons/fi";
+import { useResetPassword } from "../../Hooks/api/auth_api";
+import { toast } from "react-toastify";
+import { ImSpinner9 } from "react-icons/im";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const email = location?.state?.email;
+  const otp = location?.state?.otp;
   const {
     register,
     handleSubmit,
@@ -16,17 +24,34 @@ const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const password = watch("password");
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { mutateAsync: resetPasswordMutation, isPending } = useResetPassword();
+
+  const onSubmit = async (data) => {
+    const payload = { ...data, email, otp };
+
+    await resetPasswordMutation(payload, {
+      onSuccess: (res) => {
+        if (res?.success) {
+          toast.success(res?.message);
+          navigate("/auth/login");
+        }
+      },
+    });
   };
 
   return (
     <div className="relative min-h-screen bg-cover bg-center auth-bg">
-      <div className="relative z-10 p-8 flex items-center justify-center w-full min-h-screen">
+      <div className="relative z-10 px-2 py-8 sm:p-8 flex items-center justify-center w-full min-h-screen">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex w-[500px] p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500"
+          className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500"
         >
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute text-primary md:text-lg cursor-pointer font-normal capitalize flex gap-1 items-center hover:-translate-x-2 hover:text-[#d7f5a7] transition duration-300"
+          >
+            <FiArrowLeftCircle className="size-5 md:size-6" />
+          </button>
           {/* logo & title */}
           <div className="flex flex-col items-center gap-4 self-stretch">
             <figure>
@@ -124,18 +149,17 @@ const Signup = () => {
           {/* Button */}
           <button
             type="submit"
-            // disabled={isPending}
+            disabled={isPending}
             className="flex w-full h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
           >
-            {/* {isPending ? (
-                      <span className="w-full flex gap-3 items-center justify-center">
-                        <ImSpinner9 className="animate-spin" />
-                        Processing...
-                      </span>
-                    ) : (
-                      "Continue"
-                    )} */}
-            Reset Password
+            {isPending ? (
+              <span className="w-full flex gap-3 items-center justify-center">
+                <ImSpinner9 className="animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              "Reset Password"
+            )}
           </button>
         </form>
       </div>

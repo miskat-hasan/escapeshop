@@ -44,15 +44,15 @@ const informationLinks = [
 const Footer = () => {
   return (
     <div className="bg-secondary-100 py-8">
-      <div className="container space-y-13.5">
-        <div className="flex justify-between">
+      <div className="container space-y-6 md:space-y-13.5">
+        <div className="flex max-md:flex-col justify-between gap-y-8 gap-x-5">
           {/* about us */}
-          <div className="flex w-[460px] flex-col items-start gap-8 shrink-0">
+          <div className="flex max-w-[460px] flex-col items-start gap-8">
             <h3 className="text-primary text-center text-2xl tracking-wide leading-[150%] font-police">
               ESCAPESHOP
             </h3>
             <div className="space-y-8">
-              <p className="text-[#FEFFFF] text-lg font-normal leading-[150%]">
+              <p className="text-[#FEFFFF] text-sm md:text-lg font-normal leading-[150%]">
                 Discover ethically sourced. Legal herbal smoking blends and
                 wellness essentials crafted for the modern souls.
               </p>
@@ -73,64 +73,65 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          {/* quick Links */}
-          <div className="space-y-8">
-            <h5 className="text-white text-base font-medium leading-6">
-              Quick Links
-            </h5>
-            <div className="flex flex-col gap-4">
-              {quickLinks?.map((item, index) => (
-                <Link
-                  to={item.path}
-                  key={index}
+          <div className="flex justify-between gap-y-8 gap-x-5 max-sm:flex-wrap">
+            {/* quick Links */}
+            <div className="space-y-3 sm:space-y-4 md:space-y-8">
+              <h5 className="text-white text-lg font-medium leading-6 text-nowrap">
+                Quick Links
+              </h5>
+              <div className="flex flex-col gap-2 md:gap-4">
+                {quickLinks?.map((item, index) => (
+                  <Link
+                    to={item.path}
+                    key={index}
+                    className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300 text-nowrap"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            {/* information Links */}
+            <div className="space-y-2 sm:space-y-4 md:space-y-8">
+              <h5 className="text-white text-lg font-medium leading-6 text-nowrap">
+                Information Links
+              </h5>
+              <div className="flex flex-col gap-2 md:gap-4">
+                {informationLinks?.map((item, index) => (
+                  <Link
+                    to={item.path}
+                    key={index}
+                    className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            {/* Contact Us */}
+            <div className="space-y-2 sm:space-y-4 md:space-y-8">
+              <h5 className="text-white text-lg font-medium leading-6">
+                Connect With Us
+              </h5>
+              <div className="flex flex-col gap-2 md:gap-4">
+                <a
+                  href="mailto:hello@escapeshop.com"
                   className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300"
                 >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-          {/* information Links */}
-          <div className="space-y-8">
-            <h5 className="text-white text-base font-medium leading-6">
-              Information Links
-            </h5>
-            <div className="flex flex-col gap-4">
-              {informationLinks?.map((item, index) => (
-                <Link
-                  to={item.path}
-                  key={index}
-                  className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          {/* Contact Us */}
-          <div className="space-y-8">
-            <h5 className="text-white text-base font-medium leading-6">
-              Connect With Us
-            </h5>
-            <div className="flex flex-col gap-4">
-              <a
-                href="mailto:hello@escapeshop.com"
-                className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300"
-              >
-                hello@escapeshop.com
-              </a>
-              {/* <a
+                  hello@escapeshop.com
+                </a>
+                {/* <a
                 href="tel: +1 (555) 123-4567"
                 className="text-white text-sm font-normal leading-[150%] hover:text-primary transition duration-300"
               >
                 +1 (555) 123-4567
               </a> */}
+              </div>
             </div>
           </div>
         </div>
         <div className="w-full h-px bg-primary"></div>
-        <div className="flex items-center justify-between text-white text-center text-sm font-normal leading-normal">
+        <div className="flex max-sm:flex-col items-center justify-between text-white text-center text-sm font-normal leading-normal">
           <p>
             © 2025 <span className="text-primary">escapeshop</span> All rights
             reserved.

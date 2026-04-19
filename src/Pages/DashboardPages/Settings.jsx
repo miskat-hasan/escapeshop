@@ -22,7 +22,7 @@ const Settings = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
-      <div className="flex w-[989px] px-6 py-9 flex-col items-start gap-6 rounded-2xl bg-[#0C353C]/20 border border-secondary-100">
+      <div className="flex max-w-[989px] px-6 py-9 flex-col items-start gap-6 rounded-2xl bg-[#0C353C]/20 border border-secondary-100">
         {/* Current Password */}
         <div className="relative w-full mb-4">
           <p className="text-[#E7EBEC] leading-[150%] mb-6">

@@ -3,9 +3,9 @@ import { CalenderSVG, StarFillSVG, StarSVG } from "./Svg/SvgContainer";
 
 const ReviewCard = () => {
   return (
-    <div className="flex w-[407px] p-4 flex-col items-start gap-3 rounded-2xl border border-[#0C353C] bg-[#C1C79E]/20">
+    <div className="flex min-w-[300px] mx-auto max-w-[407px] p-2 md:p-4 flex-col items-start gap-3 rounded-2xl border border-[#0C353C] bg-[#C1C79E]/20">
       {/* product image */}
-      <div class="h-[240px] w-full overflow-hidden rounded-t-2xl border border-[#0C353C]">
+      <div class="h-[200px] xl:h-[240px] w-full overflow-hidden rounded-t-2xl border border-[#0C353C]">
         <img
           src="/product-img.png"
           alt="Description of image"
@@ -13,7 +13,7 @@ const ReviewCard = () => {
         />
       </div>
       {/* review text */}
-      <p className="text-[#E7EBEC] text-base font-normal leading-6">
+      <p className="text-[#E7EBEC] text-sm md:text-base font-normal xl:leading-6">
         "Absolutely love this product! The lavender is so calming and helps me
         unwind after a long day. The quality is excellent and the effects are
         exactly what I was looking for."
@@ -24,10 +24,10 @@ const ReviewCard = () => {
           .fill(0)
           .map((_, i) => (
             <span key={i}>
-              <StarFillSVG />
+              <StarFillSVG className={'max-xl:size-4'}/>
             </span>
           ))}
-        <StarSVG />
+        <StarSVG className={'max-xl:size-4'}/>
       </div>
       {/* user */}
       <div className="flex items-center justify-between w-full">
