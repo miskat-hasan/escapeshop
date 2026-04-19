@@ -20,7 +20,7 @@ import ContactUsPage from "../Pages/ContactUsPage";
 import CustomerReviewPage from "../Pages/CustomerReviewPage";
 import AddToCartPage from "../Pages/AddToCartPage";
 import CustomerInformationPage from "../Pages/CustomerInformationPage";
-// import PrivateRouter from "./PrivateRouter";
+import PrivateRouter from "./PrivateRouter";
 import PersonalInformation from "../Pages/DashboardPages/PersonalInformation";
 import Logout from "../Pages/DashboardPages/Logout";
 import Settings from "../Pages/DashboardPages/Settings";
@@ -124,13 +124,13 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: (
-      // <PrivateRouter>
+      <PrivateRouter>
         <DashboardLayout />
-      // </PrivateRouter>
+      </PrivateRouter>
     ),
     children: [
       {
-        path: "/dashboard/personal-information",
+        index: true,
         element: <PersonalInformation />,
       },
       {

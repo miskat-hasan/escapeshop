@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const AuthSuccessfulModal = ({title, subTitle, buttonText, buttonLink}) => {
+const AuthSuccessfulModal = ({ title, subTitle, buttonText, buttonLink }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   return (
     <div className="relative min-h-screen bg-cover bg-center auth-bg">
       <div className="relative z-10 px-2 py-8 sm:p-8 flex items-center justify-center w-full min-h-screen">
@@ -22,12 +24,15 @@ const AuthSuccessfulModal = ({title, subTitle, buttonText, buttonLink}) => {
           </div>
 
           {/* Button */}
-          <Link
-            to={buttonLink}
+          <button
+            type="button"
+            onClick={() =>
+              navigate(location?.state ? location?.state : buttonLink)
+            }
             className="flex w-full h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
           >
             {buttonText}
-          </Link>
+          </button>
         </div>
       </div>
     </div>

@@ -6,9 +6,14 @@ import {
 } from "../../Components/Svg/SvgContainer";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useRegister } from "../../Hooks/api/auth_api";
+import { ImSpinner9 } from "react-icons/im";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -16,12 +21,23 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
+  const { mutate, isPending } = useRegister();
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const password = watch("password");
 
   const onSubmit = (data) => {
-    console.log(data);
+    mutate(data, {
+      onSuccess: (res) => {
+        if (res?.success) {
+          toast.success(res?.message);
+          navigate("/auth/verify-otp", {
+            state: { email: data?.email },
+          });
+        }
+      },
+    });
   };
 
   return (
@@ -170,18 +186,17 @@ const Signup = () => {
           {/* Button */}
           <button
             type="submit"
-            // disabled={isPending}
+            disabled={isPending}
             className="flex w-full h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
           >
-            {/* {isPending ? (
-                      <span className="w-full flex gap-3 items-center justify-center">
-                        <ImSpinner9 className="animate-spin" />
-                        Processing...
-                      </span>
-                    ) : (
-                      "Continue"
-                    )} */}
-            Sign Up
+            {isPending ? (
+              <span className="w-full flex gap-3 items-center justify-center">
+                <ImSpinner9 className="animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              "Sign Up"
+            )}
           </button>
           <p className="text-[#99A1AF] text-center text-base font-normal leading-6 w-full">
             Already have an account?{" "}
@@ -207,6 +222,12 @@ const Signup = () => {
               <AppleSVG />
               <span>Sign in with Apple</span>
             </div>
+            <Link
+              to={"/"}
+              className="text-sm sm:text-base flex justify-center underline text-primary"
+            >
+              Back to Home
+            </Link>
           </div>
         </form>
       </div>

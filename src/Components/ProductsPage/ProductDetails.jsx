@@ -35,18 +35,18 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="min-h-screen text-white px-6 py-10 lg:px-16 pt-[180px]">
+    <div className="text-white sm:px-6 py-10 lg:px-16 pt-32 sm:pt-[180px]">
       
       <div className="container">
-        <div className="flex items-center gap-2 mb-8">
-          <span className="text-white text-[18px] font-normal leading-[150%]">
+        <div className="flex items-center gap-2 mb-4 sm:mb-8">
+          <span className="text-white text-sm sm:text-[18px] font-normal leading-[150%]">
             Home
           </span>
           <span className="text-[#B4C0C3] text-sm font-normal leading-5">
             {" "}
             /{" "}
           </span>
-          <span className="text-white text-[18px] font-normal leading-[150%]">
+          <span className="text-white text-sm sm:text-[18px] font-normal leading-[150%]">
             Product
           </span>
           <span className="text-[#B4C0C3] text-sm font-normal leading-5">
@@ -54,13 +54,13 @@ const ProductDetails = () => {
             /{" "}
           </span>
 
-          <span className="text-[#C1C79E] text-[18px] font-normal leading-[150%]">
+          <span className="text-[#C1C79E] text-sm sm:text-[18px] font-normal leading-[150%]">
             Product Details
           </span>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 items-start">
-          <div className="w-[703px] h-[620px] rounded-xl overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 items-start">
+          <div className="max-md:max-w-[650px] w-full md:w-[703px] h-[620px] flex-1 rounded-xl overflow-hidden">
             <img
               src={selectedImage}
               alt="Product"
@@ -69,92 +69,92 @@ const ProductDetails = () => {
           </div>
 
           <div className="flex-1">
-            <h1 className="text-4xl lg:text-[40px] text-white font-semibold leading-[120%] mb-3">
+            <h1 className="text-2xl sm:text-4xl lg:text-[40px] text-white font-semibold leading-[120%] mb-1 sm:mb-3">
               {product.name}
             </h1>
 
-            <div className="flex items-center gap-2 self-stretch mb-4">
+            <div className="flex items-center gap-2 self-stretch mb-1 sm:mb-4">
               <div className="flex gap-0.5">
                 {Array(4)
                   .fill(0)
                   .map((_, i) => (
                     <span key={i}>
-                      <StarFillSVG />
+                      <StarFillSVG className={'max-sm:size-4'}/>
                     </span>
                   ))}
-                <StarSVG />
+                <StarSVG  className={'max-sm:size-4'}/>
               </div>
-              <span className="text-white text-xl font-semibold leading-[150%]">
+              <span className="text-white text-sm sm:text-xl font-semibold leading-[150%]">
                 (320)
               </span>
             </div>
 
-            <div className="flex items-center gap-4 mb-4">
-              <span className="text-gray-400 line-through text-lg">
+            <div className="flex items-center gap-4 mb-1 sm:mb-4">
+              <span className="text-gray-400 line-through sm:text-lg">
                 ${product.oldPrice.toFixed(2)} USD
               </span>
-              <span className="text-3xl font-semibold text-[#d9dfae]">
+              <span className="text-lg sm:text-3xl font-semibold text-[#d9dfae]">
                 ${product.price.toFixed(2)} USD
               </span>
             </div>
-            <div className="flex text-[#9dd38c] items-center gap-2 mb-6">
-              <TbPackages className="size-5" />
-              <p className="font-medium">
+            <div className="flex text-[#9dd38c] items-center gap-2 mb-3 sm:mb-6">
+              <TbPackages className="size-4 sm:size-5" />
+              <p className="font-medium max-sm:font-normal max-sm:text-sm">
                 In Stock{" "}
-                <span className="text-white text-base font-medium leading-[150%]">
+                <span className="text-white leading-[150%]">
                   - {product.stock} items left
                 </span>
               </p>
             </div>
 
-            <p className="text-white text-base font-normal leading-6 mb-6">
+            <p className="text-neutral-200 sm:text-white max-sm:text-sm mb-3 sm:mb-6">
               {product.description}
             </p>
 
-            <div className="flex mb-6">
-              <div className="flex h-12 px-4 py-3 justify-center items-center gap-[10px] rounded-lg border-[0.4px] border-secondary-100">
+            <div className="flex mb-3 sm:mb-6">
+              <div className="flex h-11 sm:h-12 px-2 sm:px-4 py-3 justify-center items-center gap-2.5 rounded-lg border-[0.4px] border-secondary-100">
                 <button
                   onClick={decrement}
-                  className="flex w-6 h-6 justify-center items-center gap-[10px] aspect-square rounded-lg border border-white/80 cursor-pointer"
+                  className="flex w-6 h-6 justify-center items-center gap-2.5 aspect-square rounded-lg border border-white/80 cursor-pointer"
                 >
                   <MinusSVG />
                 </button>
-                <span className="text-white min-w-[24px] text-center text-[18px] font-semibold leading-[150%]">
+                <span className="text-white min-w-6 text-center sm:text-[18px] font-semibold leading-[150%]">
                   {quantity}
                 </span>
                 <button
                   onClick={increment}
-                  className="flex w-6 h-6 justify-center items-center gap-[10px] aspect-square rounded-lg border border-white/80 cursor-pointer"
+                  className="flex w-6 h-6 justify-center items-center gap-2.5 aspect-square rounded-lg border border-white/80 cursor-pointer"
                 >
                   <PlusSVG />
                 </button>
               </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-3 sm:space-y-6">
               <button
                 onClick={handleAddToCart}
-                className="flex w-full h-12 px-4 py-3 justify-center items-center gap-[10px] self-stretch rounded-lg border-[0.4px] border-secondary-100 text-white text-center text-base font-medium leading-[150%] cursor-pointer"
+                className="flex w-full h-11 sm:h-12 px-4 py-3 justify-center items-center gap-2.5 self-stretch rounded-lg border-[0.4px] border-secondary-100 text-white text-center text-base font-medium leading-[150%] cursor-pointer"
               >
                 Add to Cart
               </button>
 
               <button
                 onClick={handleBuyNow}
-                className="flex h-12 px-4 py-3 justify-center items-center gap-[10px] self-stretch rounded-lg border border-[#C1C79E] bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-[150%] w-full"
+                className="flex h-11 sm:h-12 px-4 py-3 justify-center items-center gap-2.5 self-stretch rounded-lg border border-[#C1C79E] bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-[150%] w-full"
               >
                 Buy Now
               </button>
             </div>
 
-            <div className="flex gap-4 mt-6 overflow-x-auto">
+            <div className="fle hidden sm:gap-2 xl:gap-4 mt-6 overflow-x-auto">
               {product.images.map((img, i) => (
                 <button
                   key={i}
                   onClick={() => setSelectedImage(img)}
                   className={`rounded-xl overflow-hidden border-2 min-w-[100px] flex-1 h-20 ${
                     selectedImage === img
-                      ? "border-[#d9dfae]"
+                      ? "border-secondary-100"
                       : "border-transparent"
                   }`}
                 >
