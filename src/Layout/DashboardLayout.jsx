@@ -71,7 +71,7 @@ const DashboardLayout = () => {
         </div>
       </div>
       <Footer />
-      <ScrollRestoration />
+      {/* <ScrollRestoration /> */}
     </>
   );
 };
