@@ -4,7 +4,7 @@ import useAuth from "../useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 
 // Get User Data
-export const useGetUserData = token => {
+export const useGetUserData = (token) => {
   return useApi({
     method: "get",
     key: ["user", token],
@@ -23,7 +23,7 @@ export const useRegister = () => {
     method: "post",
     key: ["register"],
     endpoint: "/api/users/register",
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -35,7 +35,7 @@ export const useVerifyRegistrationOtp = () => {
     method: "post",
     key: ["verify-registration-otp"],
     endpoint: "/api/users/otp-verify",
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -51,7 +51,7 @@ export const useLogin = () => {
     method: "post",
     key: ["login"],
     endpoint: "/api/users/login",
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
         setToken(res?.data?.token);
@@ -59,7 +59,7 @@ export const useLogin = () => {
         navigate(location?.state ? location?.state : "/dashboard");
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -71,7 +71,7 @@ export const useVerifyEmail = () => {
     method: "post",
     key: ["verify-email"],
     endpoint: "/api/users/forgot-password",
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -82,8 +82,8 @@ export const useVerifyOtp = () => {
   return useApi({
     method: "post",
     key: ["verify-otp"],
-    endpoint: "/api/users/otp-verify",
-    onError: err => {
+    endpoint: "/api/users/verify-otp",
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -95,12 +95,7 @@ export const useResendOtp = () => {
     method: "post",
     key: ["resend-otp"],
     endpoint: "/api/users/resend-otp",
-    onSuccess: res => {
-      if (res?.success) {
-        toast.success(res?.message);
-      }
-    },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -111,8 +106,8 @@ export const useResetPassword = () => {
   return useApi({
     method: "post",
     key: ["reset-password"],
-    endpoint: "/api/reset-password",
-    onError: err => {
+    endpoint: "/api/users/reset-password",
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -128,7 +123,7 @@ export const useLogout = () => {
     key: ["logout"],
     isPrivate: true,
     endpoint: "/api/users/logout",
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         clearToken();
         setUser(null);
@@ -137,7 +132,7 @@ export const useLogout = () => {
         navigate("/auth/login");
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -149,13 +144,8 @@ export const useChangePassword = () => {
     method: "post",
     key: ["change-password"],
     isPrivate: true,
-    endpoint: "/api/auth/change-password",
-    onSuccess: res => {
-      if (res?.success) {
-        toast.success(res?.message);
-      }
-    },
-    onError: err => {
+    endpoint: "/api/users/change-password",
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -171,14 +161,14 @@ export const useSocialLogin = () => {
     method: "post",
     key: ["google-login"],
     endpoint: "/api/social-login",
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
         setToken(res?.data?.token);
         navigate(location?.state ? location?.state : "/dashboard");
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });

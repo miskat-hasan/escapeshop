@@ -33,7 +33,7 @@ const Signup = () => {
       onSuccess: (res) => {
         if (res?.success) {
           toast.success(res?.message);
-          navigate("/auth/login");
+          navigate("/auth/password-updated-successfully");
         }
       },
     });
@@ -46,22 +46,22 @@ const Signup = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500"
         >
-          <button
+          <div
             onClick={() => navigate(-1)}
-            className="absolute text-primary md:text-lg cursor-pointer font-normal capitalize flex gap-1 items-center hover:-translate-x-2 hover:text-[#d7f5a7] transition duration-300"
+            className="absolute text-primary md:text-lg cursor-pointer font-normal capitalize flex gap-1 items-center sm:hover:-translate-x-2 hover:text-[#d7f5a7] transition duration-300"
           >
             <FiArrowLeftCircle className="size-5 md:size-6" />
-          </button>
+          </div>
           {/* logo & title */}
           <div className="flex flex-col items-center gap-4 self-stretch">
-            <figure>
-              <img src="/logo.png" alt="logo" />
+            <figure className="max-sm:w-[90px]">
+              <img src="/logo.png" alt="logo" className="size-full object-cover"/>
             </figure>
-            <div className="space-y-2">
-              <h3 className="text-white text-center text-2xl font-semibold leading-[150%]">
+            <div className="sm:space-y-2">
+              <h3 className="text-white text-center text-xl sm:text-2xl font-semibold leading-[150%]">
                 Create a New Password
               </h3>
-              <p className="text-[#99A1AF] text-center text-base font-normal leading-[150%]">
+              <p className="text-[#99A1AF] text-center max-sm:text-sm font-normal leading-[150%]">
                 Choose a new strong password to secure your account.
               </p>
             </div>
@@ -150,7 +150,7 @@ const Signup = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-full h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
+            className="flex w-full h-12 sm:h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
           >
             {isPending ? (
               <span className="w-full flex gap-3 items-center justify-center">
