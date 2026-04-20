@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import OTPInput from "react-otp-input";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../Hooks/useAuth";
-import { useVerifyRegistrationOtp } from "../../Hooks/api/auth_api";
+import { useResendOtp, useVerifyRegistrationOtp } from "../../Hooks/api/auth_api";
 import { ImSpinner9 } from "react-icons/im";
 import { FiArrowLeftCircle } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const VerifyOTP = () => {
   const location = useLocation();
@@ -13,15 +14,30 @@ const VerifyOTP = () => {
   const email = location?.state?.email;
   const { setToken } = useAuth();
 
-  const { mutateAsync: verifyOtpMutation, isPending } =
-    useVerifyRegistrationOtp();
+  const { mutateAsync: verifyOtpMutation, isPending } = useVerifyRegistrationOtp();
+  const { mutateAsync: resendOtpMutation, isPending: isResending } = useResendOtp();
 
-  // Form Data
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (!email) navigate("/auth/register", { replace: true });
+  }, [email]);
+
+  const [timer, setTimer] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [timer]);
 
   const onSubmit = async (data) => {
     const payload = { email: decodeURIComponent(email), ...data };
@@ -30,7 +46,32 @@ const VerifyOTP = () => {
         if (res?.success) {
           setToken(res?.data?.token);
           navigate("/auth/register-successfully");
+        } else {
+          toast.error(res?.message || "Something went wrong.");
         }
+      },
+      onError: (err) => {
+        toast.error(err?.message || "Verification failed. Please try again.");
+      },
+    });
+  };
+
+  const handleResendOtp = async () => {
+    if (timer > 0) return;
+
+    const payload = { email: decodeURIComponent(email) };
+
+    await resendOtpMutation(payload, {
+      onSuccess: (res) => {
+        if (res?.success) {
+          toast.success(res?.message);
+          setTimer(30);
+        } else {
+          toast.error(res?.message || "Something went wrong.");
+        }
+      },
+      onError: (err) => {
+        toast.error(err?.message || "Failed to resend OTP. Please try again.");
       },
     });
   };
@@ -42,19 +83,18 @@ const VerifyOTP = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500 relative"
         >
-          <button
+          <div
             onClick={() => navigate(-1)}
             className="absolute text-primary md:text-lg cursor-pointer font-normal capitalize flex gap-1 items-center hover:-translate-x-2 hover:text-[#d7f5a7] transition duration-300"
           >
             <FiArrowLeftCircle className="size-5 md:size-6" />
-          </button>
-          {/* logo & title */}
+          </div>
           <div className="flex flex-col items-center gap-4 self-stretch">
-            <figure>
-              <img src="/logo.png" alt="logo" />
+            <figure className="max-sm:w-[90px]">
+              <img src="/logo.png" alt="logo" className="size-full object-cover" />
             </figure>
             <div className="space-y-2">
-              <h3 className="text-white text-center text-2xl font-semibold leading-[150%]">
+              <h3 className="text-white text-center text-xl sm:text-2xl font-semibold leading-[150%]">
                 Email Verification OTP
               </h3>
               <p className="text-[#99A1AF] text-center text-base font-normal leading-[150%]">
@@ -64,14 +104,11 @@ const VerifyOTP = () => {
             </div>
           </div>
 
-          {/* form input */}
           <div className="w-full space-y-4">
-            {/* Email */}
             <div>
               <p className="text-white text-sm font-normal leading-[150%] mb-2">
                 Enter OTP
               </p>
-              {/* OTP Input */}
               <div>
                 <Controller
                   name="otp"
@@ -104,7 +141,6 @@ const VerifyOTP = () => {
             </div>
           </div>
 
-          {/* Button */}
           <button
             type="submit"
             disabled={isPending}
@@ -118,6 +154,18 @@ const VerifyOTP = () => {
             ) : (
               "OTP Verification"
             )}
+          </button>
+          <button
+            type="button"
+            onClick={handleResendOtp}
+            disabled={isResending || timer > 0}
+            className="text-sm sm:text-base flex justify-center underline text-primary w-full cursor-pointer disabled:cursor-not-allowed"
+          >
+            {isResending
+              ? "Resending..."
+              : timer > 0
+                ? `Resend OTP in ${timer}s`
+                : "Resend OTP"}
           </button>
         </form>
       </div>

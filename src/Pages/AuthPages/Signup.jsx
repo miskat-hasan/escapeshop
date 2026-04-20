@@ -45,15 +45,19 @@ const Signup = () => {
       <div className="relative z-10 px-2 py-8 sm:p-8 flex items-center justify-center w-full min-h-screen">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex w-[500px] px-2 py-8 xs:p-8 flex-col items-start gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500"
+          className="flex w-[500px] px-2 pb-5 xs:p-8 flex-col items-start gap-5 sm:gap-8 rounded-[20px] border-[0.4px] border-[#9caf9c] bg-secondary-500"
         >
           {/* logo & title */}
           <div className="flex flex-col items-center gap-4 self-stretch">
-            <figure>
-              <img src="/logo.png" alt="logo" />
+            <figure className="max-sm:w-[90px]">
+              <img
+                src="/logo.png"
+                alt="logo"
+                className="size-full object-cover"
+              />
             </figure>
-            <div className="space-y-2">
-              <h3 className="text-white text-center text-2xl font-semibold leading-[150%]">
+            <div className="sm:space-y-2">
+              <h3 className="text-white text-center text-xl sm:text-2xl font-semibold leading-[150%]">
                 Create New Account
               </h3>
               <p className="text-[#99A1AF] text-center text-base font-normal leading-[150%]">
@@ -187,7 +191,7 @@ const Signup = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="flex w-full h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
+            className="flex w-full h-12 sm:h-[52px] py-2 px-4 justify-center items-center gap-2 self-stretch rounded-xl bg-primary text-[#051619] text-center text-base font-semibold leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
           >
             {isPending ? (
               <span className="w-full flex gap-3 items-center justify-center">
@@ -204,7 +208,7 @@ const Signup = () => {
               Login
             </Link>
           </p>
-          <div className="space-y-6 w-full">
+          <div className="space-y-3 sm:space-y-6 w-full">
             <div className="flex items-center gap-5 text-[#99A1AF] w-full">
               <div className="flex-1 h-[1px] bg-[#99A1AF]" />
               <span>or connect with</span>
@@ -212,13 +216,13 @@ const Signup = () => {
             </div>
 
             {/* GOOGLE LOGIN */}
-            <div className="flex h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
+            <div className="flex h-12 sm:h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
               <GoogleSVG />
               <span>Sign in with Google</span>
             </div>
 
             {/* APPLE LOGIN */}
-            <div className="flex h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
+            <div className="flex h-12 sm:h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
               <AppleSVG />
               <span>Sign in with Apple</span>
             </div>
