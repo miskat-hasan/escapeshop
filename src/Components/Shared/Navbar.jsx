@@ -55,7 +55,7 @@ const dashboardNavLinks = [
   },
 ];
 
-const mobileNavLinks = [...navLinks, { name: "Sign Up", path: "/register" }];
+const mobileNavLinks = [...navLinks, { name: "Sign Up", path: "/auth/register" }];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -83,7 +83,7 @@ const Navbar = () => {
 
   return (
     <div className="w-full relative">
-      <div className="max-w-[1296px] absolute top-6 left-1/2 right-1/2 -translate-x-1/2 z-[999] w-full mx-auto px-1">
+      <div className="max-w-[1296px] fixed top-6 left-1/2 right-1/2 -translate-x-1/2 z-[999] w-full mx-auto px-1">
         <div className="flex w-full sm:py-2 px-2 sm:px-4 justify-between items-center rounded-lg border-y border-[0.4px] border-solid border-[#5b5f41] bg-[#3d3d3d33] backdrop-blur-[10px]">
           {/* logo */}
           <Link to={"/"} className="w-[67px] h-[75px] shrink-0 aspect-[67/75]">

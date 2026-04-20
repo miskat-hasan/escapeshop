@@ -22,17 +22,16 @@ export const useActiveOrders = () => {
   });
 };
 
-// All cover images
-export const useAllCoverImages = () => {
+// All reviews == done
+export const useGetAllReviews = (page) => {
   return useApi({
     method: "get",
-    key: ["all-cover-images"],
-    endpoint: "/api/auth/cover-image",
-    isPrivate: true,
+    key: ["all-reviews", page],
+    endpoint: `/api/reviews/customer?page=${page}`,
   });
 };
 
-// Update user info == me
+// Update user info == done
 export const useUpdateUserInfo = () => {
   const queryClient = useQueryClient();
 
@@ -41,68 +40,33 @@ export const useUpdateUserInfo = () => {
     key: ["update-userinfo"],
     isPrivate: true,
     endpoint: "/api/users/update",
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
         queryClient.invalidateQueries("user");
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
 };
 
-// Uploaded design
-export const useUploadedDesign = () => {
-  return useApi({
-    method: "get",
-    key: ["uploaded-design"],
-    endpoint: "/api/dashboard/order-image",
-    isPrivate: true,
-  });
-};
 
-// Order Ids
-export const useOrderIds = () => {
-  return useApi({
-    method: "get",
-    key: ["order-ids"],
-    endpoint: "/api/support-content",
-    isPrivate: true,
-  });
-};
-
-// Support
-export const useSupport = () => {
+// Support == done
+export const useContactUs = () => {
   return useApi({
     method: "post",
-    key: ["support"],
-    isPrivate: true,
-    endpoint: "/api/support",
-    onSuccess: res => {
-      if (res?.success) {
-        toast.success(res?.message);
-      }
-    },
-    onError: err => {
+    key: ["contact"],
+    endpoint: "/api/contact-us",
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
 };
 
-// Sticker type
-export const useStickerType = () => {
-  return useApi({
-    method: "get",
-    key: ["sticker-type"],
-    endpoint: "/api/sticker/start-here",
-    isPrivate: false,
-  });
-};
-
-// All Review
-export const useAllReview = page => {
+// All Review == done
+export const useAllReview = (page) => {
   return useApi({
     method: "get",
     key: ["all-review", page],
@@ -121,24 +85,24 @@ export const useAddReview = () => {
     key: ["add-review"],
     isPrivate: true,
     endpoint: "/api/reviews",
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
         queryClient.invalidateQueries("all-review");
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
 };
 
-// Sticker Info
-export const useStickerInfo = id => {
+// Top Shelf Reserve products == done
+export const useTopShelfProducts = () => {
   return useApi({
     method: "get",
-    key: ["sticker-info", id],
-    endpoint: `/api/sticker/type/${id}`,
+    key: ["top-shelf-products"],
+    endpoint: `/api/products/home-second`,
     isPrivate: false,
   });
 };
@@ -153,7 +117,7 @@ export const useCheckout = () => {
     headers: {
       "Content-Type": "multipart/form-data",
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -166,12 +130,12 @@ export const usePromoCode = () => {
     key: ["add-promo-code"],
     isPrivate: true,
     endpoint: "/api/orders/promo-code/apply",
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -198,18 +162,18 @@ export const useShippingPrice = () => {
 };
 
 // Send proof req
-export const useSendProofReq = id => {
+export const useSendProofReq = (id) => {
   return useApi({
     method: "post",
     key: ["send-proof", id],
     isPrivate: true,
     endpoint: `/api/proof-chat/${id}/request`,
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -222,12 +186,12 @@ export const useChangeProofStatus = (order_id, request_id) => {
     key: ["change-proof-status", order_id, request_id],
     isPrivate: true,
     endpoint: `/api/proof-chat/${order_id}/${request_id}/approve-or-reject`,
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
@@ -242,20 +206,20 @@ export const useSendMessage = (order_id, request_id) => {
     key: ["send-message", order_id, request_id],
     isPrivate: true,
     endpoint: `/api/proof-chat/${order_id}/${request_id}/message`,
-    onSuccess: res => {
+    onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
         queryClient.invalidateQueries("proof-chat");
       }
     },
-    onError: err => {
+    onError: (err) => {
       toast.error(err?.response?.data?.message);
     },
   });
 };
 
 // Proof chat
-export const useProofChat = id => {
+export const useProofChat = (id) => {
   return useApi({
     method: "get",
     key: ["proof-chat", id],

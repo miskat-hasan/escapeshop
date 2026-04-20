@@ -1,7 +1,32 @@
 import React from "react";
-import { LocationSVG, MailSVG, PhoneSVG } from "../Svg/SvgContainer";
+import { AlertSVG, LocationSVG, MailSVG, PhoneSVG } from "../Svg/SvgContainer";
+import { useContactUs } from "../../Hooks/api/dashboard_api";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { ImSpinner9 } from "react-icons/im";
 
 const ContactInformation = () => {
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const { mutateAsync, isPending } = useContactUs();
+
+  const onSubmit = async (data) => {
+    await mutateAsync(data, {
+      onSuccess: (res) => {
+        if (res?.success) {
+          toast.success(res?.message);
+          reset();
+        }
+      },
+    });
+  };
+
   return (
     <div className="py-14 mt-14 mb-28 relative overflow-hidden">
       <div className="max-w-[1044px] mx-auto flex max-md:flex-col gap-4 justify-center md:justify-between px-2">
@@ -20,7 +45,10 @@ const ContactInformation = () => {
                 <h5 className="text-white text-2xl font-normal leading-[150%]">
                   Email
                 </h5>
-                <a href="mailto:hello@escapeshop.com" className="text-white text-base font-normal leading-6 hover:text-primary transition duration-300">
+                <a
+                  href="mailto:hello@escapeshop.com"
+                  className="text-white text-base font-normal leading-6 hover:text-primary transition duration-300"
+                >
                   hello@escapeshop.com
                 </a>
               </div>
@@ -57,7 +85,10 @@ const ContactInformation = () => {
           </div>
         </div>
         {/* right side -- form */}
-        <form className="flex sm:max-w-[536px] mx-auto w-full p-3 sm:p-6 flex-col items-start gap-4 rounded-2xl bg-white/10 border border-[#3a5237]">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex sm:max-w-[536px] mx-auto w-full p-3 sm:p-6 flex-col items-start gap-4 rounded-2xl bg-white/10 border border-[#3a5237]"
+        >
           <div className="flex max-sm:flex-col sm:items-center gap-4 justify-between w-full">
             <div className="flex flex-col flex-1 gap-2">
               <label className="text-white text-base font-normal leading-6">
@@ -66,8 +97,17 @@ const ContactInformation = () => {
               <input
                 type="text"
                 placeholder="Your Full Name"
-                className="flex w-full h-10 px-2 py-[10px] items-center gap-[10px] rounded-lg border-[0.4px] border-[#5C787C] bg-[#F6F6F633] text-white text-sm font-normal leading-[150%]"
+                className={`flex w-full h-10 px-2 py-2.5 items-center gap-2.5 rounded-lg border-[0.4px] border-[#5C787C] bg-[#F6F6F633] text-white text-sm font-normal leading-[150%] ${errors.full_name && "border-red-400"}`}
+                {...register("full_name", {
+                  required: "Name is required",
+                })}
               />
+              {errors.full_name && (
+                <p className="text-[#DF1C41] text-sm mt-1 flex items-center gap-1">
+                  <AlertSVG />
+                  {errors.full_name.message}
+                </p>
+              )}
             </div>
             <div className="flex flex-col flex-1 gap-2">
               <label className="text-white text-base font-normal leading-6">
@@ -76,22 +116,51 @@ const ContactInformation = () => {
               <input
                 type="email"
                 placeholder="Your@gmail.com"
-                className="flex w-full h-10 px-2 py-[10px] items-center gap-[10px] rounded-lg border-[0.4px] border-[#5C787C] bg-[#F6F6F633] text-white text-sm font-normal leading-[150%]"
+                className={`flex w-full h-10 px-2 py-2.5 items-center gap-2.5 rounded-lg border-[0.4px] border-[#5C787C] bg-[#F6F6F633] text-white text-sm font-normal leading-[150%] ${errors.email && "border-red-400"}`}
+                {...register("email", {
+                  required: "Email is required",
+                })}
               />
+              {errors.email && (
+                <p className="text-[#DF1C41] text-sm mt-1 flex items-center gap-1">
+                  <AlertSVG />
+                  {errors.email.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label className="text-white text-base font-normal leading-6">
-              Email Address
+              Message
             </label>
             <textarea
               rows={6}
-              className="flex h-[108px] px-2 py-[10px] items-start gap-[335px] self-stretch rounded-lg border-[0.4px] border-[#5C787C] bg-[#F6F6F633] text-white text-sm font-normal leading-[150%]"
+              className={`flex h-[108px] px-2 py-2.5 items-start gap-[335px] self-stretch rounded-lg border-[0.4px] border-[#5C787C] bg-[#F6F6F633] text-white text-sm font-normal leading-[150%] ${errors.message && "border-red-400"}`}
               placeholder="Tell us how can we help you...."
+              {...register("message", {
+                required: "Message is required",
+              })}
             ></textarea>
+            {errors.message && (
+              <p className="text-[#DF1C41] text-sm mt-1 flex items-center gap-1">
+                <AlertSVG />
+                {errors.message.message}
+              </p>
+            )}
           </div>
-          <button className="flex h-10 p-[10px] justify-center items-center gap-[10px] self-stretch rounded-lg border border-[#5C787C] bg-primary hover:bg-[#a9b469] transition duration-300 text-black cursor-pointer max-sm:text-sm font-medium leading-6">
-            Send message
+          <button
+            type="submit"
+            disabled={isPending}
+            className="flex h-10 p-2.5 justify-center items-center gap-2.5 self-stretch rounded-lg border border-[#5C787C] bg-primary text-black max-sm:text-sm font-medium leading-6 cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 hover:bg-[#d9e2a8] transition duration-300"
+          >
+            {isPending ? (
+              <span className="w-full flex gap-3 items-center justify-center">
+                <ImSpinner9 className="animate-spin" />
+                Processing...
+              </span>
+            ) : (
+              "Send message"
+            )}
           </button>
         </form>
       </div>

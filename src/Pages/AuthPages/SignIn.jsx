@@ -40,8 +40,8 @@ const Signup = () => {
         >
           {/* logo & title */}
           <div className="flex flex-col items-center gap-1 sm:gap-4 self-stretch">
-            <figure>
-              <img src="/logo.png" alt="logo" />
+           <figure className="max-sm:w-[90px]">
+              <img src="/logo.png" alt="logo" className="size-full object-cover"/>
             </figure>
             <div className="sm:space-y-2">
               <h3 className="text-white text-center text-xl sm:text-2xl font-semibold leading-[150%]">

@@ -7,7 +7,7 @@ const Logout = () => {
 
   return (
     <div className="">
-      <h2 className="text-[#F9FAFB] text-[40px] font-semibold leading-[120%] mb-4">
+      <h2 className="text-[#F9FAFB] text-3xl sm:text-[40px] font-semibold leading-[120%] mb-4">
         Logout
       </h2>
       <p className="text-[#B4C0C3] text-lg leading-[150%]">
