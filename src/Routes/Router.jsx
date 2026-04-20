@@ -26,17 +26,7 @@ import Logout from "../Pages/DashboardPages/Logout";
 import Settings from "../Pages/DashboardPages/Settings";
 import Orders from "../Pages/DashboardPages/Orders";
 import OrderHistory from "../Pages/DashboardPages/OrderHistory";
-// import Overview from "../Pages/DashboardPages/Overview/Overview";
-// import Orders from "../Pages/DashboardPages/Orders/Orders";
-// import Settings from "../Pages/DashboardPages/Settings/Settings";
-// import Designs from "../Pages/DashboardPages/Designs/Designs";
-// import Support from "../Pages/DashboardPages/Support/Support";
-// import ChooseSticker from "../Pages/Choose-sticker/ChooseSticker";
-// import StickerType from "../Pages/Sticker-type/StickerType";
-// import StickerCombo from "../Pages/Sticker-combo/StickerCombo";
 // import AddToCart from "../Pages/Add-to-cart/AddToCart";
-// import DynamicPage from "../Pages/Dynamic/DynamicPage";
-// import Returns from "../Pages/Returns/Returns";
 // import ShippingProcess from "../Pages/Shipping-process/ShippingProcess";
 
 const router = createBrowserRouter([
