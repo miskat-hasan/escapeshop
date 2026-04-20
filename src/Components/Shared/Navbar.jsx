@@ -55,7 +55,7 @@ const dashboardNavLinks = [
   },
 ];
 
-const mobileNavLinks = [...navLinks, { name: "Sign Up", path: "/register" }];
+const mobileNavLinks = [...navLinks, { name: "Sign Up", path: "/auth/register" }];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
