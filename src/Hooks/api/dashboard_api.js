@@ -22,15 +22,6 @@ export const useActiveOrders = () => {
   });
 };
 
-// All reviews == done
-export const useGetAllReviews = (page) => {
-  return useApi({
-    method: "get",
-    key: ["all-reviews", page],
-    endpoint: `/api/reviews/customer?page=${page}`,
-  });
-};
-
 // Update user info == done
 export const useUpdateUserInfo = () => {
   const queryClient = useQueryClient();
@@ -52,7 +43,6 @@ export const useUpdateUserInfo = () => {
   });
 };
 
-
 // Support == done
 export const useContactUs = () => {
   return useApi({
@@ -65,12 +55,12 @@ export const useContactUs = () => {
   });
 };
 
-// All Review == done
-export const useAllReview = (page) => {
+// All reviews == done
+export const useGetAllReviews = (page) => {
   return useApi({
     method: "get",
-    key: ["all-review", page],
-    endpoint: "/api/reviews",
+    key: ["all-reviews", page],
+    endpoint: `/api/reviews/customer`,
     params: { page },
     isPrivate: false,
   });
@@ -97,6 +87,54 @@ export const useAddReview = () => {
   });
 };
 
+// categories == done
+export const useGetAllCategories = () => {
+  return useApi({
+    method: "get",
+    key: ["categories"],
+    endpoint: `/api/categories`,
+    isPrivate: false,
+  });
+};
+
+// get all products == done
+export const useAllProducts = (page, category_id, min_price, max_price, search, sort) => {
+  return useApi({
+    method: "get",
+    key: ["all-products", page, category_id, min_price, max_price, search, sort],
+    endpoint: `/api/products/filter`,
+    isPrivate: false,
+    params: {
+      page,
+      category_id: category_id ?? undefined,
+      min_price: min_price ?? undefined,
+      max_price: max_price ?? undefined,
+      search: search || undefined,
+      sort: sort !== "featured" ? sort : undefined,
+    },
+  });
+};
+
+// Featured products == done
+export const useFeaturedProducts = () => {
+  return useApi({
+    method: "get",
+    key: ["featured-products"],
+    endpoint: `/api/products/featured`,
+    isPrivate: false,
+  });
+};
+
+// Green Aura products == done
+export const useGreenAuraProducts = () => {
+  return useApi({
+    method: "get",
+    key: ["green-aura-products"],
+    endpoint: `/api/products/home-third`,
+    isPrivate: false,
+  });
+};
+
 // Top Shelf Reserve products == done
 export const useTopShelfProducts = () => {
   return useApi({
@@ -107,13 +145,34 @@ export const useTopShelfProducts = () => {
   });
 };
 
-// Checkout
+// Budget Friendly products == done
+export const useBudgetFriendlyProducts = () => {
+  return useApi({
+    method: "get",
+    key: ["budget-friendly-products"],
+    endpoint: `/api/products/home-first`,
+    isPrivate: false,
+  });
+};
+
+// product details == done
+export const useProductDetails = (id) => {
+  return useApi({
+    method: "get",
+    enabled: !!id,
+    key: ["product-details", id],
+    endpoint: `/api/products/${id}`,
+    isPrivate: false,
+  });
+};
+
+// Checkout == done
 export const useCheckout = () => {
   return useApi({
     method: "post",
     key: ["checkout"],
     isPrivate: true,
-    endpoint: "/api/orders/checkout",
+    endpoint: "/api/make-order",
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -130,62 +189,6 @@ export const usePromoCode = () => {
     key: ["add-promo-code"],
     isPrivate: true,
     endpoint: "/api/orders/promo-code/apply",
-    onSuccess: (res) => {
-      if (res?.success) {
-        toast.success(res?.message);
-      }
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
-// Sticker Combo
-export const useStickerCombo = () => {
-  return useApi({
-    method: "get",
-    key: ["sticker-combo"],
-    endpoint: `/api/order-sample`,
-    isPrivate: false,
-  });
-};
-
-// Shipping Price
-export const useShippingPrice = () => {
-  return useApi({
-    method: "get",
-    key: ["shipping-price"],
-    endpoint: "/api/state-pricing",
-    isPrivate: true,
-  });
-};
-
-// Send proof req
-export const useSendProofReq = (id) => {
-  return useApi({
-    method: "post",
-    key: ["send-proof", id],
-    isPrivate: true,
-    endpoint: `/api/proof-chat/${id}/request`,
-    onSuccess: (res) => {
-      if (res?.success) {
-        toast.success(res?.message);
-      }
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
-// Change Proof status
-export const useChangeProofStatus = (order_id, request_id) => {
-  return useApi({
-    method: "post",
-    key: ["change-proof-status", order_id, request_id],
-    isPrivate: true,
-    endpoint: `/api/proof-chat/${order_id}/${request_id}/approve-or-reject`,
     onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
@@ -218,12 +221,22 @@ export const useSendMessage = (order_id, request_id) => {
   });
 };
 
-// Proof chat
-export const useProofChat = (id) => {
+// About us section content == done
+export const useAboutUsSectionContent = () => {
   return useApi({
     method: "get",
-    key: ["proof-chat", id],
-    endpoint: `/api/proof-chat/${id}`,
-    isPrivate: true,
+    key: ["about-us-section-content"],
+    endpoint: `/api/about-page`,
+    isPrivate: false,
+  });
+};
+
+// About us page content == done
+export const useAboutContent = () => {
+  return useApi({
+    method: "get",
+    key: ["about-us-content"],
+    endpoint: `/api/about-content`,
+    isPrivate: false,
   });
 };

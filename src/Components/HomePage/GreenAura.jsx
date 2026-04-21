@@ -1,21 +1,21 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
-import { useTopShelfProducts } from "../../Hooks/api/dashboard_api";
+import { useGreenAuraProducts } from "../../Hooks/api/dashboard_api";
 import ProductCardSkeleton from "./ProductCardSkeleton";
 
-const TopReserve = () => {
-  const { data, isLoading } = useTopShelfProducts();
+const GreenAura = () => {
+  const { data, isLoading } = useGreenAuraProducts();
 
   return (
     <div className="py-14">
       <h2 className="section_title sm:mb-4 px-1">
-        Top Shelf Reserve THCA Flower
+        Green Aura Assist Greenhouse THCA Flower
       </h2>
       <p className="section_sub_title px-1">
-        Limited Batches Of Rare THCA Strains Crafted By Boutique Growers!
+        Exceptional Quality At Great Value! Shop Our Newest THCA Flower Selection Across Various Strains.
       </p>
-      
+
       <div className="relative mt-12 py-7 overflow-hidden">
         {/* gradient circles */}
         <div className="gradient_circle -right-24 -top-20 -z-10"></div>
@@ -24,19 +24,17 @@ const TopReserve = () => {
         {/* product container */}
         <div className="container justify-center grid min-[620px]:grid-cols-2 min-[900px]:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
           {isLoading
-            ? 
-              [...Array(4)].map((_, index) => (
+            ? [...Array(4)].map((_, index) => (
                 <ProductCardSkeleton key={index} />
               ))
-            : 
-              data?.data?.map((item, index) => (
+            : data?.data?.green_aura?.map((item, index) => (
                 <div key={index}>
                   <ProductCard data={item} />
                 </div>
               ))}
         </div>
 
-        {/* button - hidden while loading for cleaner UI */}
+        {/* button */}
         {!isLoading && (
           <div className="mt-8 flex justify-center">
             <Link to={"/products"} className="small_btn">
@@ -49,4 +47,4 @@ const TopReserve = () => {
   );
 };
 
-export default TopReserve;
+export default GreenAura;

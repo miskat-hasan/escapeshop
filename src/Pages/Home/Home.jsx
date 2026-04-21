@@ -7,6 +7,7 @@ import TopReserve from "../../Components/HomePage/TopReserve";
 import BudgetFriendly from "../../Components/HomePage/BudgetFriendly";
 import CustomerReview from "../../Components/HomePage/CustomerReview";
 import ContactInformation from "../../Components/Common/ContactInformation";
+import GreenAura from "../../Components/HomePage/GreenAura";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <ChooseYourVibe />
       <AboutUs />
       <FeaturedProducts />
+      <GreenAura />
       <TopReserve />
       <BudgetFriendly />
       <CustomerReview />

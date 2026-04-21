@@ -14,11 +14,11 @@ const quickLinks = [
   },
   {
     label: "Review",
-    path: "/review",
+    path: "/customer-review",
   },
   {
     label: "Contact",
-    path: "/contact",
+    path: "/contact-us",
   },
 ];
 

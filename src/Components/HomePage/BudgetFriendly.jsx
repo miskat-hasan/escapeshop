@@ -1,13 +1,20 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
+import { useBudgetFriendlyProducts } from "../../Hooks/api/dashboard_api";
+import ProductCardSkeleton from "./ProductCardSkeleton";
 
 const BudgetFriendly = () => {
+  const { data, isLoading } = useBudgetFriendlyProducts();
+
   return (
     <div className="py-14">
-      <h2 className="section_title sm:mb-4">Want Budget-Friendly THCA Flower?</h2>
+      <h2 className="section_title sm:mb-4">
+        Want Budget-Friendly THCA Flower?
+      </h2>
       <p className="section_sub_title max-sm:text-sm">
-        Count On Our Team! Explore 500+ LBs Of Quality, Cost-Effective THCA Buds Available In Diverse Strains, Weights & Grades—Limited Stock!
+        Count On Our Team! Explore 500+ LBs Of Quality, Cost-Effective THCA Buds
+        Available In Diverse Strains, Weights & Grades—Limited Stock!
       </p>
       <div className="relative mt-12 py-7 overflow-hidden">
         {/* gradient circles */}
@@ -16,18 +23,24 @@ const BudgetFriendly = () => {
 
         {/* product container */}
         <div className="container justify-center grid min-[620px]:grid-cols-2 min-[900px]:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
-          {Array(4)
-            .fill(null)
-            ?.map((_, index) => (
-              <div key={index} className="">
-                <ProductCard />
-              </div>
-            ))}
+          {isLoading
+            ? [...Array(4)].map((_, index) => (
+                <ProductCardSkeleton key={index} />
+              ))
+            : data?.data?.map((item, index) => (
+                <div key={index}>
+                  <ProductCard data={item} />
+                </div>
+              ))}
         </div>
         {/* button */}
-        <div className="mt-8 flex justify-center">
-          <Link to={'/products'} className="small_btn">View All</Link>
-        </div>
+        {!isLoading && (
+          <div className="mt-8 flex justify-center">
+            <Link to={"/products"} className="small_btn">
+              View All
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
