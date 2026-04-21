@@ -1,37 +1,5 @@
 import React from "react";
-import {
-  HeartSVG,
-  LeafSVG,
-  TrustSVG,
-  UserCheckedSVG,
-} from "../Svg/SvgContainer";
-
-const contents = [
-  {
-    icon: LeafSVG,
-    title: "100% Natural",
-    description:
-      "All our products are organic, natural, and free from harmful chemicals or additives.",
-  },
-  {
-    icon: TrustSVG,
-    title: "Trusted & Legal",
-    description:
-      "All products are completely legal and third-party tested for quality assurance.",
-  },
-  {
-    icon: HeartSVG,
-    title: "Wellness First",
-    description:
-      "Carefully selected herbs to support your relaxation, focus, and overall wellbeing.",
-  },
-  {
-    icon: UserCheckedSVG,
-    title: "Age Verification",
-    description:
-      "You must be 21 or older to buy. Age verification is required at checkout.",
-  },
-];
+import { useAboutUsSectionContent } from "../../Hooks/api/dashboard_api";
 
 const AboutUs = () => {
   return (
@@ -49,25 +17,59 @@ const AboutUs = () => {
 
 export default AboutUs;
 
-export const  AboutUsCards = () => {
+export const AboutUsCards = () => {
+  const { data, isLoading } = useAboutUsSectionContent();
+
   return (
     <div className="grid sm:grid-cols-2 gap-2 sm:gap-4 md:gap-8 mt-12">
-      {contents?.map((item, index) => (
-        <div
-          key={index}
-          className="flex p-4 sm:px-2 md:p-8 flex-col items-center gap-2 sm:gap-4 flex-1 rounded-2xl bg-[#C1C79E33] border border-[#777a64]"
-        >
-          <div className="flex size-12 sm:w-16 sm:h-16 sm:px-4 justify-center items-center rounded-full bg-[#0C353C33] border border-[#777a64]">
-            <item.icon />
-          </div>
-          <div className="sm:space-y-2 text-center">
-            <h5 className="100% Natural">{item?.title}</h5>
-            <p className="text-[#B4C0C3] text-center max-sm:text-sm sm:leading-6">
-              {item?.description}
-            </p>
-          </div>
+      {isLoading
+        ?
+          [...Array(2)].map((_, index) => <AboutUsCardSkeleton key={index} />)
+        : data?.data?.map((item, index) => (
+            <div
+              key={index}
+              className="flex p-4 sm:px-2 md:p-8 flex-col items-center gap-2 sm:gap-4 flex-1 rounded-2xl bg-[#C1C79E33] border border-[#777a64] transition-all duration-300 hover:bg-[#C1C79E4d]"
+            >
+              {/* Icon Container */}
+              <div className="flex size-12 sm:w-16 sm:h-16 sm:px-4 justify-center items-center rounded-full bg-[#0C353C33] border border-[#777a64]">
+                <img
+                  src={import.meta.env.VITE_SITE_URL + "/" + item?.image}
+                  alt={item?.title}
+                  className=" object-contain"
+                />
+              </div>
+
+              {/* Text Content */}
+              <div className="sm:space-y-2 text-center">
+                <h5 className="text-white text-lg font-semibold leading-tight">
+                  {item?.title}
+                </h5>
+                <p className="text-[#B4C0C3] text-center max-sm:text-sm sm:leading-6">
+                  {item?.text}
+                </p>
+              </div>
+            </div>
+          ))}
+    </div>
+  );
+};
+
+const AboutUsCardSkeleton = () => {
+  return (
+    <div className="flex p-4 sm:px-2 md:p-8 flex-col items-center gap-2 sm:gap-4 flex-1 rounded-2xl bg-[#C1C79E1a] border border-[#777a64] animate-pulse">
+      {/* Circle Icon Placeholder */}
+      <div className="size-12 sm:size-16 rounded-full bg-[#0C353C33] border border-[#777a64]/50" />
+
+      <div className="w-full flex flex-col items-center gap-3 mt-2">
+        {/* Title Placeholder */}
+        <div className="h-6 bg-white/10 rounded w-1/3" />
+
+        {/* Paragraph Placeholders */}
+        <div className="w-full space-y-2">
+          <div className="h-4 bg-white/10 rounded w-full" />
+          <div className="h-4 bg-white/10 rounded w-5/6" />
         </div>
-      ))}
+      </div>
     </div>
   );
 };

@@ -27,13 +27,17 @@ const CustomerReviewPage = () => {
       </div>
       {/* review cards grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xl:gap-9 pt-20 pb-8 container">
-        {isLoading
-          ? [...Array(6)].map((_, index) => <ReviewCardSkeleton key={index} />)
-          : data?.data?.data?.map((item, index) => (
-              <div key={index}>
-                <ReviewCard data={item} />
-              </div>
-            ))}
+        {isLoading ? (
+          [...Array(6)].map((_, index) => <ReviewCardSkeleton key={index} />)
+        ) : data?.data?.data?.length > 0 ? (
+          data?.data?.data?.map((item, index) => (
+            <div key={index}>
+              <ReviewCard data={item} />
+            </div>
+          ))
+        ) : (
+          <div className="py-10 text-lg text-center w-full">No data found </div>
+        )}
       </div>
 
       {/* Pagination */}

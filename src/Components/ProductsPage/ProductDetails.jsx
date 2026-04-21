@@ -1,26 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MinusSVG, PlusSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 import { TbPackages } from "react-icons/tb";
 
-const ProductDetails = () => {
-  const product = {
-    name: "Cheap Indoor THCA Flower Ounce",
-    rating: 5,
-    reviews: 320,
-    oldPrice: 160.99,
-    price: 100.99,
-    stock: 12,
-    description:
-      "Affordable indoor THCA flower with strong potency and rich flavors. 1oz (28g) starting at $60 with auto discount.",
-    images: [
-      "https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=300&q=80",
-      "https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&w=300&q=80",
-      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=300&q=80",
-    ],
-  };
+const ProductDetails = ({ product }) => {
+  const [selectedImage, setSelectedImage] = useState(
+    product?.gallery?.[0]?.image || "",
+  );
 
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
+  useEffect(() => {
+    if (product?.gallery?.[0]?.image) {
+      setSelectedImage(product.gallery[0].image);
+    }
+  }, [product]);
+
   const [quantity, setQuantity] = useState(1);
 
   const increment = () => setQuantity((prev) => prev + 1);
@@ -36,7 +28,6 @@ const ProductDetails = () => {
 
   return (
     <div className="text-white sm:px-6 py-10 lg:px-16 pt-32 sm:pt-[180px]">
-      
       <div className="container">
         <div className="flex items-center gap-2 mb-4 sm:mb-8">
           <span className="text-white text-sm sm:text-[18px] font-normal leading-[150%]">
@@ -60,55 +51,82 @@ const ProductDetails = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 items-start">
-          <div className="max-md:max-w-[650px] w-full md:w-[703px] h-[620px] flex-1 rounded-xl overflow-hidden">
-            <img
-              src={selectedImage}
-              alt="Product"
-              className="size-full object-cover"
-            />
+          <div className="max-md:max-w-[650px] w-full md:max-w-[703px] flex-1">
+            <div className="max-md:max-w-[650px] w-full md:max-w-[703px] max-sm:h-[280px] md:h-[420px] rounded-xl overflow-hidden">
+              <img
+                src={import.meta.env.VITE_SITE_URL + "/" + selectedImage}
+                alt="Product"
+                className="size-full object-cover"
+              />
+            </div>
+            <div className="grid grid-cols-4 sm:gap-2 xl:gap-4 mt-3 sm:mt-5 overflow-x-auto">
+              {product?.gallery?.map((item, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedImage(item?.image)}
+                  className={`rounded-xl cursor-pointer overflow-hidden border-2 flex-1 h-20 ${
+                    selectedImage === item?.image
+                      ? "border-primary"
+                      : "border-transparent"
+                  }`}
+                >
+                  <img
+                    src={import.meta.env.VITE_SITE_URL + "/" + item?.image}
+                    alt={`Thumbnail ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </button>
+              ))}
+            </div>
           </div>
-
           <div className="flex-1">
             <h1 className="text-2xl sm:text-4xl lg:text-[40px] text-white font-semibold leading-[120%] mb-1 sm:mb-3">
-              {product.name}
+              {product?.name}
             </h1>
 
             <div className="flex items-center gap-2 self-stretch mb-1 sm:mb-4">
               <div className="flex gap-0.5">
-                {Array(4)
-                  .fill(0)
+                {Array(Math.floor(product?.reviews_avg_rating || 0))
+                  .fill(null)
                   .map((_, i) => (
-                    <span key={i}>
-                      <StarFillSVG className={'max-sm:size-4'}/>
+                    <span key={`full-${i}`}>
+                      <StarFillSVG className={"max-sm:size-4"} />
                     </span>
                   ))}
-                <StarSVG  className={'max-sm:size-4'}/>
+
+                {Array(5 - Math.floor(product?.reviews_avg_rating || 0))
+                  .fill(null)
+                  .map((_, i) => (
+                    <span key={`empty-${i}`}>
+                      <StarSVG className={"max-sm:size-4"} />
+                    </span>
+                  ))}
               </div>
               <span className="text-white text-sm sm:text-xl font-semibold leading-[150%]">
-                (320)
+                ({product?.reviews_count})
               </span>
             </div>
 
             <div className="flex items-center gap-4 mb-1 sm:mb-4">
               <span className="text-gray-400 line-through sm:text-lg">
-                ${product.oldPrice.toFixed(2)} USD
+                ${product?.price} USD
               </span>
               <span className="text-lg sm:text-3xl font-semibold text-[#d9dfae]">
-                ${product.price.toFixed(2)} USD
+                ${product?.sell_price} USD
               </span>
             </div>
             <div className="flex text-[#9dd38c] items-center gap-2 mb-3 sm:mb-6">
               <TbPackages className="size-4 sm:size-5" />
               <p className="font-medium max-sm:font-normal max-sm:text-sm">
-                In Stock{" "}
-                <span className="text-white leading-[150%]">
+                {product?.stock_status}
+                {/* <span className="text-white leading-[150%]">
                   - {product.stock} items left
-                </span>
+                </span> */}
               </p>
             </div>
 
             <p className="text-neutral-200 sm:text-white max-sm:text-sm mb-3 sm:mb-6">
-              {product.description}
+              {product?.description}
             </p>
 
             <div className="flex mb-3 sm:mb-6">
@@ -147,19 +165,19 @@ const ProductDetails = () => {
               </button>
             </div>
 
-            <div className="fle hidden sm:gap-2 xl:gap-4 mt-6 overflow-x-auto">
-              {product.images.map((img, i) => (
+            <div className="max-lg: hidden  grid-cols-4 sm:gap-2 xl:gap-4 mt-6 overflow-x-auto">
+              {product?.gallery?.map((item, i) => (
                 <button
                   key={i}
-                  onClick={() => setSelectedImage(img)}
-                  className={`rounded-xl overflow-hidden border-2 min-w-[100px] flex-1 h-20 ${
-                    selectedImage === img
+                  onClick={() => setSelectedImage(item?.id)}
+                  className={`rounded-xl overflow-hidden border-2 flex-1 h-20 ${
+                    selectedImage === item?.id
                       ? "border-secondary-100"
                       : "border-transparent"
                   }`}
                 >
                   <img
-                    src={img}
+                    src={import.meta.env.VITE_SITE_URL + "/" + item?.image}
                     alt={`Thumbnail ${i + 1}`}
                     className="w-full h-full object-cover"
                   />
