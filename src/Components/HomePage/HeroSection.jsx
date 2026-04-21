@@ -7,7 +7,7 @@ const HeroSection = () => {
   useEffect(() => {
     if (videoRef.current) {
       // Set the speed to 50%
-      videoRef.current.playbackRate = .7;
+      videoRef.current.playbackRate = 0.7;
     }
   }, []);
   return (
@@ -42,13 +42,13 @@ const HeroSection = () => {
         <div className="flex items-center gap-4 mt-12 justify-center">
           <Link
             to={"/products"}
-            className="flex py-2 sm:py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#C1C79E] text-[#051619] text-center max-sm:text-sm font-medium leading-6"
+            className="flex py-2 sm:py-3 px-6 justify-center items-center gap-2.5 rounded-lg bg-[#C1C79E] text-[#051619] text-center max-sm:text-sm font-medium leading-6 hover:bg-[#dae988] transition duration-300"
           >
             Shop Now
           </Link>
           <Link
             to={"/about-us"}
-            className="flex py-2 sm:py-3 px-6 justify-center items-center gap-[10px] rounded-lg bg-[#0C353C] text-[#FEFFFF] text-center max-sm:text-sm font-medium leading-6"
+            className="flex py-2 sm:py-3 px-6 justify-center items-center gap-2.5 rounded-lg bg-[#0C353C] text-[#FEFFFF] text-center max-sm:text-sm font-medium leading-6 hover:bg-[#07282e] transition duration-300"
           >
             Learn More
           </Link>

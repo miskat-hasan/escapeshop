@@ -50,14 +50,21 @@ const ProductCard = ({ data }) => {
           )}
           <div className="flex items-center gap-2 self-stretch">
             <div className="flex gap-0.5">
-              {Array(4)
-                .fill(0)
+              {Array(Math.floor(data?.reviews_avg_rating || 0))
+                .fill(null)
                 .map((_, i) => (
-                  <span key={i}>
+                  <span key={`full-${i}`}>
                     <StarFillSVG className={"max-sm:size-4"} />
                   </span>
                 ))}
-              <StarSVG className={"max-sm:size-4"} />
+
+              {Array(5 - Math.floor(data?.reviews_avg_rating || 0))
+                .fill(null)
+                .map((_, i) => (
+                  <span key={`empty-${i}`}>
+                    <StarSVG className={"max-sm:size-4"} />
+                  </span>
+                ))}
             </div>
             <span className="text-white sm:text-xl font-semibold leading-[150%]">
               ({data?.reviews_count})

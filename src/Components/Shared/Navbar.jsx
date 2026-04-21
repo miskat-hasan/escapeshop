@@ -108,9 +108,9 @@ const Navbar = () => {
           {/* icons & auth buttons */}
           <div className="flex items-center gap-4 sm:gap-7 lg:gap-12">
             <div className="flex items-center gap-4 lg:gap-6">
-              <button className="cursor-pointer max-sm:hidden">
+              {/* <button className="cursor-pointer max-sm:hidden">
                 <SearchSVG />
-              </button>
+              </button> */}
               <Link to={"/cart"} className="cursor-pointer">
                 <CartSVG />
               </Link>
@@ -245,7 +245,7 @@ const Navbar = () => {
             <IoMdClose className="size-6" />
           </button>
 
-          <div className="relative w-full mt-8">
+          {/* <div className="relative w-full mt-8">
             <input
               type="text"
               placeholder="Search ...."
@@ -254,7 +254,7 @@ const Navbar = () => {
             <span className="absolute top-4 right-5">
               <IoSearch className="size-5 text-primary" />
             </span>
-          </div>
+          </div> */}
 
           <div className="flex flex-col space-y-4 mt-8">
             {mobileNavLinks?.map((item, index) => (

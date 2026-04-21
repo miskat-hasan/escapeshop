@@ -2,8 +2,11 @@ import React from "react";
 import { AboutUsCards } from "../Components/HomePage/AboutUs";
 import MissionVision from "../Components/AboutUsPage/MissionVision";
 import TrustLegality from "../Components/AboutUsPage/TrustLegality";
+import { useAboutContent } from "../Hooks/api/dashboard_api";
 
 const AboutUsPage = () => {
+  const { data, isLoading } = useAboutContent();
+
   return (
     <div>
       {/* header */}
@@ -12,16 +15,15 @@ const AboutUsPage = () => {
       >
         <div className="relative z-10 p-8 container">
           <h1 className="text-white text-center font-police text-4xl md:text-[64px] leading-[120%] mb-3 md:mb-8">
-            About EscapeShop
+            {data?.data?.main_title}
           </h1>
           <p className="text-[#B4C0C3] text-center text-lg md:text-2xl font-normal leading-[150%] max-w-[1050px] mx-auto">
-            Delivering premium THCA products with unmatched quality and care.
-            Built on trust, consistency, and customer satisfaction.
+            {data?.data?.main_description}
           </p>
         </div>
         <div className="absolute w-full h-[180px] -bottom-5 bg-[url('/hero-bottom-gradient.png')] bg-no-repeat" />
       </div>
-      <MissionVision />
+      <MissionVision data={data?.data} />
       <div className="container">
         <AboutUsCards />
       </div>
