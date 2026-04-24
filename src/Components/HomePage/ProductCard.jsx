@@ -1,22 +1,33 @@
 import React from "react";
 import { CartSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 import { Link } from "react-router-dom";
+import { useCart } from "../../Context/CartContext";
 
 const ProductCard = ({ data }) => {
-  console.log(data);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(data, 1);
+  };
+
   return (
     <div className="flex min-w-[280px] max-w-[350px] w-full h-full flex-col items-start gap-4 rounded-2xl border border-solid border-secondary-100 bg-secondary-500">
       {/* Image */}
-      <div className="relative w-full h-[204px] rounded-t-2xl  overflow-hidden">
+      <div className="relative w-full h-[204px] rounded-t-2xl overflow-hidden">
         <img
           src={import.meta.env.VITE_SITE_URL + "/" + data?.thumbnail_image}
           alt="THCA Flower"
           className="size-full object-cover"
         />
-        {/* Cart icon */}
-        <div className="absolute top-3 left-3 flex p-1 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400">
+        {/* Cart icon — adds to cart */}
+        <button
+          onClick={handleAddToCart}
+          className="absolute top-3 left-3 flex p-1 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 cursor-pointer hover:bg-secondary-500 transition duration-300"
+        >
           <CartSVG />
-        </div>
+        </button>
         {/* Badge */}
         {data?.badge && (
           <div className="absolute top-3 right-3 flex py-1 px-2 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 text-white max-sm:text-sm font-normal leading-6">
@@ -57,7 +68,6 @@ const ProductCard = ({ data }) => {
                     <StarFillSVG className={"max-sm:size-4"} />
                   </span>
                 ))}
-
               {Array(5 - Math.floor(data?.reviews_avg_rating || 0))
                 .fill(null)
                 .map((_, i) => (

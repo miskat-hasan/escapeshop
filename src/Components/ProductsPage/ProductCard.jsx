@@ -1,8 +1,19 @@
 import React from "react";
 import { CartSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 import { Link } from "react-router-dom";
+import { useCart } from "../../Context/CartContext";
+import { toast } from "react-toastify";
 
 const ProductCard = ({ item }) => {
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(item, 1);
+    toast.success(`${item?.name} added to cart`);
+  };
+
   return (
     <div className="flex sm:p-2 xl:p-4 flex-col items-center gap-1.5 sm:gap-3 xl:gap-6 flex-1 rounded-lg sm:rounded-2xl border-[0.4px] border-secondary-100 max-w-[336px] w-full mx-auto">
       {/* Image */}
@@ -12,10 +23,13 @@ const ProductCard = ({ item }) => {
           alt={item?.name}
           className="size-full object-cover"
         />
-        {/* Cart icon */}
-        <div className="absolute top-1 sm:top-3 left-1 sm:left-3 flex p-1 justify-center items-center rounded-md border border-solid border-secondary-300 bg-secondary-400">
+        {/* Cart icon — adds to cart */}
+        <button
+          onClick={handleAddToCart}
+          className="absolute top-1 sm:top-3 left-1 sm:left-3 flex p-1 justify-center items-center rounded-md border border-solid border-secondary-300 bg-secondary-400 cursor-pointer hover:bg-secondary-500 transition duration-300"
+        >
           <CartSVG className={"max-sm:size-5"} />
-        </div>
+        </button>
         {/* Badge */}
         <div className="absolute top-1 sm:top-3 right-1 sm:right-3 flex sm:py-1 px-2 justify-center items-center gap-2.5 rounded-md border border-solid border-secondary-300 bg-secondary-400 text-white text-xs sm:text-sm xl:text-base font-normal leading-6">
           {item?.badge}
@@ -46,7 +60,6 @@ const ProductCard = ({ item }) => {
                   <StarFillSVG className={"max-sm:size-3 max-xl:size-4"} />
                 </span>
               ))}
-
             {Array(5 - Math.floor(item?.reviews_avg_rating || 0))
               .fill(null)
               .map((_, i) => (
