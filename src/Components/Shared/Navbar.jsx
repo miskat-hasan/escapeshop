@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
+import { useCart } from "../../Context/CartContext";
 import {
   CartSVG,
   LogoutSVG,
@@ -55,7 +56,10 @@ const dashboardNavLinks = [
   },
 ];
 
-const mobileNavLinks = [...navLinks, { name: "Sign Up", path: "/auth/register" }];
+const mobileNavLinks = [
+  ...navLinks,
+  { name: "Sign Up", path: "/auth/register" },
+];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,6 +70,8 @@ const Navbar = () => {
   const location = useLocation();
 
   const mobileMenuRef = useRef(null);
+
+  const { totalItems } = useCart();
 
   useEffect(() => {
     const observerElement = mobileMenuRef.current;
@@ -111,8 +117,16 @@ const Navbar = () => {
               {/* <button className="cursor-pointer max-sm:hidden">
                 <SearchSVG />
               </button> */}
-              <Link to={"/cart"} className="cursor-pointer">
+              {/* <Link to={"/cart"} className="cursor-pointer">
                 <CartSVG />
+              </Link> */}
+              <Link to="/cart" className="relative">
+                <CartSVG />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-[#C1C79E] text-[#051619] text-[10px] font-bold leading-none">
+                    {totalItems > 99 ? "99+" : totalItems}
+                  </span>
+                )}
               </Link>
               <button className="cursor-pointer max-sm:hidden">
                 <NotificationSVG />

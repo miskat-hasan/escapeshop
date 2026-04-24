@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PageHeader from "../Components/ProductsPage/PageHeader";
 import ProductCard from "../Components/ProductsPage/ProductCard";
 import {
@@ -11,6 +11,7 @@ import {
   useAllProducts,
   useGetAllCategories,
 } from "../Hooks/api/dashboard_api";
+import { useSearchParams } from "react-router-dom";
 
 const PRICE_RANGES = [
   { label: "All Price", min: null, max: null },
@@ -31,16 +32,30 @@ const SORT_OPTIONS = [
 ];
 
 const ProductsPage = () => {
+  const [searchParams] = useSearchParams();
+  const didInit = useRef(false);
+
   const { data: CATEGORIES, isLoading: categoriesLoading } =
     useGetAllCategories();
+
   const [page, setPage] = useState(1);
-  const [categoryId, setCategoryId] = useState(null);
+  const [categoryId, setCategoryId] = useState(() => {
+    const param = searchParams.get("category");
+    return param ? Number(param) : null;
+  });
   const [priceRange, setPriceRange] = useState({ min: null, max: null });
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState(null);
   const [showSortDropdown, setShowSortDropdown] = useState(false);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+
+  useEffect(() => {
+    if (didInit.current) return;
+    const param = searchParams.get("category");
+    if (param) setCategoryId(Number(param));
+    didInit.current = true;
+  }, [searchParams]);
 
   const { data: productsData, isLoading: productsDataLoading } = useAllProducts(
     page,
@@ -88,7 +103,6 @@ const ProductsPage = () => {
           <p className="text-white text-base font-medium leading-6">Category</p>
           <div className="flex pl-6 flex-col items-start gap-2">
             <button
-              key={"All"}
               onClick={() => handleCategoryChange(null)}
               className="flex items-center gap-2 cursor-pointer"
             >
@@ -98,39 +112,44 @@ const ProductsPage = () => {
                 <div className="w-[15px] h-[15px] aspect-square rounded-[4px] border-[1.5px] border-[#B4C0C3]" />
               )}
               <span
-                className={`text-base font-normal leading-6 ${
-                  categoryId === null ? "text-white" : "text-[#B4C0C3]"
-                }`}
+                className={`text-base font-normal leading-6 ${categoryId === null ? "text-white" : "text-[#B4C0C3]"}`}
               >
                 All
               </span>
             </button>
-            {CATEGORIES?.data?.map((cat) => (
-              <button
-                key={cat.name}
-                onClick={() => handleCategoryChange(cat.id)}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                {categoryId === cat.id ? (
-                  <CheckMarkSVG />
-                ) : (
-                  <div className="w-[15px] h-[15px] aspect-square rounded-[4px] border-[1.5px] border-[#B4C0C3]" />
-                )}
-                <span
-                  className={`text-base font-normal leading-6 ${
-                    categoryId === cat.id ? "text-white" : "text-[#B4C0C3]"
-                  }`}
-                >
-                  {cat.name}
-                </span>
-              </button>
-            ))}
+
+            {/* Skeleton while categories load */}
+            {categoriesLoading
+              ? [...Array(4)].map((_, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <div className="w-[15px] h-[15px] rounded-[4px] bg-[#B4C0C3]/20 animate-pulse" />
+                    <div className="h-4 w-20 rounded bg-[#B4C0C3]/20 animate-pulse" />
+                  </div>
+                ))
+              : CATEGORIES?.data?.map((cat) => (
+                  <button
+                    key={cat.name}
+                    onClick={() => handleCategoryChange(cat.id)}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    {categoryId === cat.id ? (
+                      <CheckMarkSVG />
+                    ) : (
+                      <div className="w-[15px] h-[15px] aspect-square rounded-[4px] border-[1.5px] border-[#B4C0C3]" />
+                    )}
+                    <span
+                      className={`text-base font-normal leading-6 ${categoryId === cat.id ? "text-white" : "text-[#B4C0C3]"}`}
+                    >
+                      {cat.name}
+                    </span>
+                  </button>
+                ))}
           </div>
         </div>
       </div>
 
+      {/* Price Range section — unchanged */}
       <div className="flex p-4 flex-col items-start gap-4 self-stretch">
-        {/* Price Range */}
         <div className="flex flex-col gap-4">
           <p className="text-white text-base font-medium leading-6">
             Price Range
@@ -151,9 +170,7 @@ const ProductsPage = () => {
                     <div className="w-[15px] h-[15px] aspect-square rounded-[4px] border-[1.5px] border-[#B4C0C3]" />
                   )}
                   <span
-                    className={`text-base font-normal leading-6 ${
-                      isActive ? "text-white" : "text-[#B4C0C3]"
-                    }`}
+                    className={`text-base font-normal leading-6 ${isActive ? "text-white" : "text-[#B4C0C3]"}`}
                   >
                     {range.label}
                   </span>
@@ -200,16 +217,20 @@ const ProductsPage = () => {
               <div className="relative">
                 <button
                   onClick={() => setShowSortDropdown((prev) => !prev)}
-                  className="flex h-11 sm:h-12 text-nowrap px-4 py-2 max-sm:text-sm justify-center items-center gap-2.5 rounded-lg border-[0.4px] border-secondary-100"
+                  className="flex h-11 sm:h-12 text-nowrap px-4 py-2 max-sm:text-sm justify-center items-center gap-2.5 rounded-lg border-[0.4px] border-secondary-100 cursor-pointer"
                 >
                   <p>
                     Sort by:{" "}
                     {SORT_OPTIONS.find((s) => s.value === sortBy)?.label}
                   </p>
-                  <DownArrowSVG />
+                  <span
+                    className={`${showSortDropdown && "rotate-180"} transition duration-300`}
+                  >
+                    <DownArrowSVG />
+                  </span>
                 </button>
                 {showSortDropdown && (
-                  <div className="absolute right-0 mt-1 z-10 bg-[#051619] border border-[#C1C79E] rounded-lg overflow-hidden min-w-full">
+                  <div className="absolute right-0 mt-1 z-10 bg-secondary-500 border border-secondary-100 rounded-lg overflow-hidden min-w-full">
                     {SORT_OPTIONS.map((option) => (
                       <button
                         key={option.value}
@@ -218,7 +239,7 @@ const ProductsPage = () => {
                           setPage(1);
                           setShowSortDropdown(false);
                         }}
-                        className={`w-full text-left px-4 py-2 text-sm whitespace-nowrap hover:bg-[#C1C79E22] ${
+                        className={`w-full text-left px-4 py-2 text-sm whitespace-nowrap hover:bg-[#C1C79E22] cursor-pointer ${
                           sortBy === option.value
                             ? "text-white"
                             : "text-[#B4C0C3]"
