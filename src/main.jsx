@@ -16,12 +16,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <AuthProvider>
-          {/* <GoogleOAuthProvider
+          <GoogleOAuthProvider
             clientId={`${import.meta.env.VITE_GOOGLE_AUTH_ID}`}
-          > */}
+          >
           <RouterProvider router={router} />
           <ToastContainer />
-          {/* </GoogleOAuthProvider> */}
+          </GoogleOAuthProvider>
         </AuthProvider>
       </CartProvider>
     </QueryClientProvider>

@@ -19,6 +19,7 @@ import {
 } from "body-scroll-lock";
 import useAuth from "../../Hooks/useAuth";
 import { ImSpinner9 } from "react-icons/im";
+import NotificationDropdown from "../Common/NotificationDropdown";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -64,6 +65,7 @@ const mobileNavLinks = [
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [openNotificationMenu, setOpenNotificationMenu] = useState(false);
 
   const { user } = useAuth();
 
@@ -128,8 +130,25 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-              <button className="cursor-pointer max-sm:hidden">
-                <NotificationSVG />
+              <button
+                className="cursor-pointer relative"
+                onClick={() => {
+                  setOpenNotificationMenu(!openNotificationMenu);
+                  setOpenMenu(false);
+                }}
+              >
+                <NotificationSVG
+                  className={
+                    openNotificationMenu &&
+                    "text-primary scale-105 transition-colors duration-300"
+                  }
+                />
+                {openNotificationMenu && (
+                  <NotificationDropdown
+                    openMenu={openNotificationMenu}
+                    onClose={() => setOpenNotificationMenu(false)}
+                  />
+                )}
               </button>
             </div>
             {!user && (
@@ -153,6 +172,7 @@ const Navbar = () => {
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpenMenu(!openMenu);
+                  setOpenNotificationMenu(false);
                 }}
                 className="relative"
               >
