@@ -1,8 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { LockSVG, OrderBoxSVG } from "../Svg/SvgContainer";
+import { useCart } from "../../Context/CartContext";
 
-const OrderSummary = () => {
+const OrderSummary = ({ shipping, setShipping, isPending }) => {
+  const { cartItems, subtotal } = useCart();
+  const shippingCost = shipping === "express" ? 5 : 0;
+  const total = subtotal + shippingCost;
+
   return (
     <div className="flex w-full p-4 md:p-6 flex-col items-center rounded-3xl border-[0.4px] border-[#C1C79E] bg-transparent h-fit">
       {/* Header */}
@@ -32,18 +36,21 @@ const OrderSummary = () => {
       <div className="w-full h-px bg-[#EBECF0] my-3 md:my-4"></div>
 
       {/* Order items */}
-      {[1, 2, 3].map((_, i) => (
-        <div key={i} className="flex w-full items-center justify-between mb-3 md:mb-4">
+      {cartItems.map((item) => (
+        <div
+          key={item.id}
+          className="flex w-full items-center justify-between mb-3 md:mb-4"
+        >
           <div className="space-y-1 md:space-y-1.5 flex-1 min-w-0 pr-4">
-            <p className="text-white text-sm md:text-base font-medium leading-[150%]">
-              Cheap Indoor THCA Flower Ounce
+            <p className="text-white text-sm md:text-base font-medium leading-[150%] truncate">
+              {item.name}
             </p>
             <p className="text-white text-xs md:text-sm font-normal leading-[150%]">
-              Qty: 1
+              Qty: {item.quantity}
             </p>
           </div>
           <p className="text-white text-lg md:text-2xl font-semibold leading-[150%] flex-shrink-0">
-            $34.00
+            ${(Number(item.sell_price) * item.quantity).toFixed(2)}
           </p>
         </div>
       ))}
@@ -54,7 +61,7 @@ const OrderSummary = () => {
           Sub Total :
         </p>
         <p className="text-white text-lg md:text-2xl font-semibold leading-[150%]">
-          $34.00
+          ${subtotal.toFixed(2)}
         </p>
       </div>
 
@@ -64,7 +71,7 @@ const OrderSummary = () => {
           Total :
         </p>
         <p className="text-white text-2xl md:text-[32px] font-semibold leading-[132%] tracking-[-0.64px]">
-          $34.00
+          ${subtotal.toFixed(2)}
         </p>
       </div>
 
@@ -72,38 +79,46 @@ const OrderSummary = () => {
       <div className="space-y-4 md:space-y-6 mb-5 md:mb-6 w-full">
         <p className="text-white text-lg md:text-xl font-medium">Shipping</p>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <label
+            htmlFor="freeDelivery"
+            className="flex items-center gap-3 cursor-pointer"
+          >
             <input
               type="radio"
-              name="shipping"
               id="freeDelivery"
-              defaultChecked
-              className="accent-[#C1C79E] w-4 h-4 cursor-pointer"
+              name="shipping"
+              checked={shipping === "free"}
+              onChange={() => setShipping("free")}
+              className="accent-[#C1C79E] w-4 h-4"
             />
-            <label htmlFor="freeDelivery" className="cursor-pointer">
-              <div className="space-y-1 md:space-y-1.5">
-                <p className="text-white text-sm md:text-base font-medium leading-[150%]">Free Delivery</p>
-                <p className="text-[#D1D5DC] text-xs md:text-sm leading-[150%]">For orders above $25</p>
-              </div>
-            </label>
-          </div>
+            <div className="space-y-1 md:space-y-1.5">
+              <p className="text-white text-sm md:text-base font-medium leading-[150%]">
+                Free Delivery
+              </p>
+              <p className="text-[#D1D5DC] text-xs md:text-sm leading-[150%]">
+                For orders above $25
+              </p>
+            </div>
+          </label>
           <p className="text-primary text-lg md:text-2xl font-semibold">Free</p>
         </div>
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <label
+            htmlFor="expressDelivery"
+            className="flex items-center gap-3 cursor-pointer"
+          >
             <input
               type="radio"
-              name="shipping"
               id="expressDelivery"
-              className="accent-[#C1C79E] w-4 h-4 cursor-pointer"
+              name="shipping"
+              checked={shipping === "express"}
+              onChange={() => setShipping("express")}
+              className="accent-[#C1C79E] w-4 h-4"
             />
-            <label
-              htmlFor="expressDelivery"
-              className="text-white text-sm md:text-base font-medium leading-[150%] cursor-pointer"
-            >
+            <p className="text-white text-sm md:text-base font-medium leading-[150%]">
               Express Delivery
-            </label>
-          </div>
+            </p>
+          </label>
           <p className="text-white text-lg md:text-2xl font-semibold">$5.00</p>
         </div>
       </div>
@@ -114,18 +129,19 @@ const OrderSummary = () => {
           Total :
         </p>
         <p className="text-white text-2xl md:text-[32px] font-semibold leading-[132%] tracking-[-0.64px]">
-          $34.00
+          ${total.toFixed(2)}
         </p>
       </div>
 
-      {/* CTA — hidden on mobile (rendered inside form), visible on desktop */}
-      <div className="hidden lg:block mt-6 md:mt-8 w-full">
-        <Link
-          to={"/order-summary"}
-          className="flex w-full cursor-pointer h-14 p-2.5 justify-center items-center gap-2.5 self-stretch rounded-lg bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-[150%]"
+      <div className="block mt-6 md:mt-8 w-full">
+        <button
+          type="submit"
+          form="checkout-form"
+          disabled={isPending}
+          className="flex w-full cursor-pointer h-14 p-2.5 justify-center items-center gap-2.5 self-stretch rounded-lg bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-[150%] disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Proceed to Checkout
-        </Link>
+          {isPending ? "Placing Order..." : "Proceed to Checkout"}
+        </button>
       </div>
 
       {/* Security note */}

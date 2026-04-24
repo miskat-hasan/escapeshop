@@ -2,6 +2,7 @@ import React from "react";
 import { FaFacebookF, FaLinkedinIn, FaTwitter } from "react-icons/fa";
 import { LuInstagram } from "react-icons/lu";
 import { Link } from "react-router-dom";
+import { useSocialMediaLinks } from "../../Hooks/api/dashboard_api";
 
 const quickLinks = [
   {
@@ -42,6 +43,8 @@ const informationLinks = [
 ];
 
 const Footer = () => {
+  const { data: socialLinks, isLoading: isSocialLinksLoading } =
+    useSocialMediaLinks();
   return (
     <div className="bg-secondary-100 py-8">
       <div className="container space-y-6 md:space-y-13.5">
@@ -59,18 +62,15 @@ const Footer = () => {
             </div>
             {/* social links */}
             <div className="flex items-center gap-4">
-              <div className="size-8 bg-[#FEFEFE] rounded-full flex items-center justify-center text-black cursor-pointer hover:bg-primary transition duration-300">
-                <FaFacebookF />
-              </div>
-              <div className="size-8 bg-[#FEFEFE] rounded-full flex items-center justify-center text-black cursor-pointer hover:bg-primary transition duration-300">
-                <FaLinkedinIn />
-              </div>
-              <div className="size-8 bg-[#FEFEFE] rounded-full flex items-center justify-center text-black cursor-pointer hover:bg-primary transition duration-300">
-                <LuInstagram />
-              </div>
-              <div className="size-8 bg-[#FEFEFE] rounded-full flex items-center justify-center text-black cursor-pointer hover:bg-primary transition duration-300">
-                <FaTwitter />
-              </div>
+              {socialLinks?.data?.map((link, index) => (
+                <Link
+                  to={link?.link}
+                  key={index}
+                  className="size-8 bg-[#FEFEFE] rounded-full flex items-center justify-center text-black cursor-pointer hover:bg-primary transition duration-300"
+                >
+                  <img src={link?.icon} alt={link?.name} />
+                </Link>
+              ))}
             </div>
           </div>
           <div className="flex justify-between gap-y-8 gap-x-5 max-sm:flex-wrap">

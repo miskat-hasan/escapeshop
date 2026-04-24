@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { MinusSVG, PlusSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 import { TbPackages } from "react-icons/tb";
+import { useCart } from "../../Context/CartContext";
+import { Link, useNavigate } from "react-router-dom";
 
 const ProductDetails = ({ product }) => {
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
+
   const [selectedImage, setSelectedImage] = useState(
     product?.gallery?.[0]?.image || "",
   );
@@ -14,43 +19,49 @@ const ProductDetails = ({ product }) => {
   }, [product]);
 
   const [quantity, setQuantity] = useState(1);
-
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   const handleAddToCart = () => {
-    console.log("Add to cart:", { product, quantity });
+    addToCart(product, quantity);
   };
 
   const handleBuyNow = () => {
-    console.log("Buy now:", { product, quantity });
+    addToCart(product, quantity);
+    navigate("/cart");
   };
 
   return (
     <div className="text-white sm:px-6 py-10 lg:px-16 pt-32 sm:pt-[180px]">
       <div className="container">
         <div className="flex items-center gap-2 mb-4 sm:mb-8">
-          <span className="text-white text-sm sm:text-[18px] font-normal leading-[150%]">
+          <Link
+            to={"/"}
+            className="text-white text-sm sm:text-[18px] font-normal leading-[150%] hover:text-primary transition duration-300"
+          >
             Home
-          </span>
+          </Link>
           <span className="text-[#B4C0C3] text-sm font-normal leading-5">
             {" "}
             /{" "}
           </span>
-          <span className="text-white text-sm sm:text-[18px] font-normal leading-[150%]">
-            Product
-          </span>
+          <Link
+            to={"/products"}
+            className="text-white text-sm sm:text-[18px] font-normal leading-[150%] hover:text-primary transition duration-300"
+          >
+            Products
+          </Link>
           <span className="text-[#B4C0C3] text-sm font-normal leading-5">
             {" "}
             /{" "}
           </span>
-
           <span className="text-[#C1C79E] text-sm sm:text-[18px] font-normal leading-[150%]">
             Product Details
           </span>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-5 sm:gap-8 items-start">
+          {/* Gallery */}
           <div className="max-md:max-w-[650px] w-full md:max-w-[703px] flex-1">
             <div className="max-md:max-w-[650px] w-full md:max-w-[703px] max-sm:h-[280px] md:h-[420px] rounded-xl overflow-hidden">
               <img
@@ -79,6 +90,8 @@ const ProductDetails = ({ product }) => {
               ))}
             </div>
           </div>
+
+          {/* Info */}
           <div className="flex-1">
             <h1 className="text-2xl sm:text-4xl lg:text-[40px] text-white font-semibold leading-[120%] mb-1 sm:mb-3">
               {product?.name}
@@ -93,7 +106,6 @@ const ProductDetails = ({ product }) => {
                       <StarFillSVG className={"max-sm:size-4"} />
                     </span>
                   ))}
-
                 {Array(5 - Math.floor(product?.reviews_avg_rating || 0))
                   .fill(null)
                   .map((_, i) => (
@@ -115,13 +127,11 @@ const ProductDetails = ({ product }) => {
                 ${product?.sell_price} USD
               </span>
             </div>
+
             <div className="flex text-[#9dd38c] items-center gap-2 mb-3 sm:mb-6">
               <TbPackages className="size-4 sm:size-5" />
               <p className="font-medium max-sm:font-normal max-sm:text-sm">
                 {product?.stock_status}
-                {/* <span className="text-white leading-[150%]">
-                  - {product.stock} items left
-                </span> */}
               </p>
             </div>
 
@@ -129,6 +139,7 @@ const ProductDetails = ({ product }) => {
               {product?.description}
             </p>
 
+            {/* Quantity */}
             <div className="flex mb-3 sm:mb-6">
               <div className="flex h-11 sm:h-12 px-2 sm:px-4 py-3 justify-center items-center gap-2.5 rounded-lg border-[0.4px] border-secondary-100">
                 <button
@@ -152,7 +163,7 @@ const ProductDetails = ({ product }) => {
             <div className="space-y-3 sm:space-y-6">
               <button
                 onClick={handleAddToCart}
-                className="flex w-full h-11 sm:h-12 px-4 py-3 justify-center items-center gap-2.5 self-stretch rounded-lg border-[0.4px] border-secondary-100 text-white text-center text-base font-medium leading-[150%] cursor-pointer"
+                className="flex w-full h-11 sm:h-12 px-4 py-3 justify-center items-center gap-2.5 self-stretch rounded-lg border-[0.4px] border-secondary-100 text-white text-center text-base font-medium leading-[150%] cursor-pointer hover:bg-secondary-100 transition duration-300"
               >
                 Add to Cart
               </button>
@@ -165,13 +176,13 @@ const ProductDetails = ({ product }) => {
               </button>
             </div>
 
-            <div className="max-lg: hidden  grid-cols-4 sm:gap-2 xl:gap-4 mt-6 overflow-x-auto">
+            {/* <div className="max-lg:hidden grid-cols-4 sm:gap-2 xl:gap-4 mt-6 overflow-x-auto">
               {product?.gallery?.map((item, i) => (
                 <button
                   key={i}
-                  onClick={() => setSelectedImage(item?.id)}
+                  onClick={() => setSelectedImage(item?.image)}
                   className={`rounded-xl overflow-hidden border-2 flex-1 h-20 ${
-                    selectedImage === item?.id
+                    selectedImage === item?.image
                       ? "border-secondary-100"
                       : "border-transparent"
                   }`}
@@ -183,7 +194,7 @@ const ProductDetails = ({ product }) => {
                   />
                 </button>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

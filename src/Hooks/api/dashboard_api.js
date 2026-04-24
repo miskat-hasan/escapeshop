@@ -240,3 +240,14 @@ export const useAboutContent = () => {
     isPrivate: false,
   });
 };
+
+// Social media links == done
+export const useSocialMediaLinks = () => {
+  return useApi({
+    method: "get",
+    key: ["social-media-links"],
+    endpoint: `/api/social-media`,
+    isPrivate: false,
+  });
+};
+
