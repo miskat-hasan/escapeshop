@@ -7,8 +7,9 @@ import {
   AppleSVG,
   GoogleSVG,
 } from "../../Components/Svg/SvgContainer";
-import { useLogin } from "../../Hooks/api/auth_api";
+import { useLogin, useSocialGoogleLogin } from "../../Hooks/api/auth_api";
 import { ImSpinner9 } from "react-icons/im";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Signup = () => {
   const {
@@ -19,6 +20,9 @@ const Signup = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
+  const { mutateAsync: googleLoginMutation, isPending: googleLoginPending } =
+    useSocialGoogleLogin();
+
   const { mutate, isPending } = useLogin();
 
   const onSubmit = (data) => {
@@ -27,9 +31,40 @@ const Signup = () => {
       password: data?.password,
       remember: Number(data?.remember),
     };
-    
+
     mutate(payload);
   };
+
+  const handleLoginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const token = tokenResponse.access_token;
+      try {
+        // const { data } = await axios(
+        //   `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
+        //   {
+        //     headers: {
+        //       Authorization: `Bearer ${token}`,
+        //     },
+        //   },
+        // );
+
+        const payload = {
+          token,
+          provider: "google",
+          // first_name: data?.given_name,
+          // last_name: data?.family_name,
+          // email: data?.email,
+        };
+        await googleLoginMutation(payload);
+        console.log(payload);
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    },
+    onError: (error) => {
+      console.error("Google Login Failed:", error);
+    },
+  });
 
   return (
     <div className="relative min-h-screen bg-cover bg-center auth-bg">
@@ -40,8 +75,12 @@ const Signup = () => {
         >
           {/* logo & title */}
           <div className="flex flex-col items-center gap-1 sm:gap-4 self-stretch">
-           <figure className="max-sm:w-[90px]">
-              <img src="/logo.png" alt="logo" className="size-full object-cover"/>
+            <figure className="max-sm:w-[90px]">
+              <img
+                src="/logo.png"
+                alt="logo"
+                className="size-full object-cover"
+              />
             </figure>
             <div className="sm:space-y-2">
               <h3 className="text-white text-center text-xl sm:text-2xl font-semibold leading-[150%]">
@@ -167,16 +206,32 @@ const Signup = () => {
             </div>
 
             {/* GOOGLE LOGIN */}
-            <div className="flex h-12 sm:h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
-              <GoogleSVG />
-              <span>Sign in with Google</span>
-            </div>
+            <button
+              type="button"
+              onClick={handleLoginWithGoogle}
+              disabled={googleLoginPending}
+              className="flex h-12 sm:h-[52px] py-3 px-6 w-full justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {googleLoginPending ? (
+                <span className="w-full flex gap-3 items-center justify-center">
+                  <ImSpinner9 className="animate-spin" />
+                </span>
+              ) : (
+                <>
+                  <GoogleSVG />
+                  <span>Sign in with Google</span>
+                </>
+              )}
+            </button>
 
             {/* APPLE LOGIN */}
-            <div className="flex h-12 sm:h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
+            <button
+              type="button"
+              className="flex h-12 sm:h-[52px] py-3 px-6 justify-center w-full items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300"
+            >
               <AppleSVG />
               <span>Sign in with Apple</span>
-            </div>
+            </button>
             <Link
               to={"/"}
               className="text-sm sm:text-base flex justify-center underline text-primary"

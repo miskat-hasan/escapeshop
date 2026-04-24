@@ -12,7 +12,7 @@ export const useGetUserData = (token) => {
     endpoint: "/api/users/profile",
     isPrivate: true,
     queryOptions: {
-      refetchInterval: 1000 * 60 * 60, // refetch every hour
+      refetchInterval: 1000 * 60 * 60,
     },
   });
 };
@@ -152,7 +152,7 @@ export const useChangePassword = () => {
 };
 
 // Google login
-export const useSocialLogin = () => {
+export const useSocialGoogleLogin = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { setToken } = useAuth();
@@ -160,7 +160,7 @@ export const useSocialLogin = () => {
   return useApi({
     method: "post",
     key: ["google-login"],
-    endpoint: "/api/social-login",
+    endpoint: "/api/social-login/google",
     onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);

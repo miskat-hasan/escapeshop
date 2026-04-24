@@ -67,7 +67,7 @@ const PersonalInformation = () => {
   return (
     <div className="space-y-5">
       <h3 className="text-xl md:text-2xl font-semibold text-[#E7EBEC]">
-        Settings
+        Personal Information
       </h3>
 
       <div className="flex max-w-[989px] px-2 py-5 sm:p-6 flex-col items-start gap-9 rounded-2xl bg-[#0C353C]/20 border border-secondary-100">

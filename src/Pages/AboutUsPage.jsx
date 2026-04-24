@@ -15,10 +15,13 @@ const AboutUsPage = () => {
       >
         <div className="relative z-10 p-8 container">
           <h1 className="text-white text-center font-police text-4xl md:text-[64px] leading-[120%] mb-3 md:mb-8">
-            {data?.data?.main_title}
+            {/* {data?.data?.main_title} */}
+            About EscapeShop
           </h1>
           <p className="text-[#B4C0C3] text-center text-lg md:text-2xl font-normal leading-[150%] max-w-[1050px] mx-auto">
-            {data?.data?.main_description}
+            {/* {data?.data?.main_description} */}
+            Delivering premium THCA products with unmatched quality and care.
+            Built on trust, consistency, and customer satisfaction.
           </p>
         </div>
         <div className="absolute w-full h-[180px] -bottom-5 bg-[url('/hero-bottom-gradient.png')] bg-no-repeat" />
