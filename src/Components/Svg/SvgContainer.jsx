@@ -972,3 +972,4 @@ export const LockSVG2 = ({ className, ...props }) => {
     </svg>
   );
 };
+
