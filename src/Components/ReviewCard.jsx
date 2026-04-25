@@ -2,7 +2,6 @@ import React from "react";
 import { CalenderSVG, StarFillSVG, StarSVG } from "./Svg/SvgContainer";
 
 const ReviewCard = ({ data }) => {
-  console.log(data);
   return (
     <div className="flex min-w-[300px] h-full mx-auto max-w-[407px] p-2 md:p-4 flex-col items-start gap-3 rounded-2xl border border-secondary-100 bg-[#C1C79E]/20">
       {/* product image */}
@@ -10,7 +9,7 @@ const ReviewCard = ({ data }) => {
         <img
           src={
             import.meta.env.VITE_SITE_URL + "/" + data?.product?.thumbnail_image
-          }
+          } // file
           alt="product image"
           class="h-full w-full object-cover object-center"
         />
@@ -40,12 +39,15 @@ const ReviewCard = ({ data }) => {
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <div className="size-9 rounded-full overflow-hidden">
-              <img
-                src="/profile.png"
+            <div className="size-9 flex items-center justify-center border-[0.4px] border-secondary-100 rounded-full overflow-hidden">
+              {data?.user?.image ? (
+
+                <img
+                src={import.meta.env.VITE_SITE_URL + "/" + data?.user?.image}
                 alt="profile"
                 className="size-full object-cover"
-              />
+                />
+              ): <div>{data?.user?.name?.charAt(0)}</div>}
             </div>
             <p className="text-[#F9FAFB]">{data?.user?.name}</p>
           </div>

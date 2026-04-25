@@ -2,6 +2,7 @@ import React from "react";
 import { CartSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 import { Link } from "react-router-dom";
 import { useCart } from "../../Context/CartContext";
+import { toast } from "react-toastify";
 
 const ProductCard = ({ data }) => {
   const { addToCart } = useCart();
@@ -10,6 +11,7 @@ const ProductCard = ({ data }) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(data, 1);
+    toast.success(`${data?.name} added to cart`);
   };
 
   return (

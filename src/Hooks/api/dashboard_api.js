@@ -2,26 +2,6 @@ import { toast } from "react-toastify";
 import useApi from "../useApi";
 import { useQueryClient } from "@tanstack/react-query";
 
-// All orders
-export const useAllOrders = () => {
-  return useApi({
-    method: "get",
-    key: ["all-orders"],
-    endpoint: "/api/dashboard/orders-page",
-    isPrivate: true,
-  });
-};
-
-// Active orders
-export const useActiveOrders = () => {
-  return useApi({
-    method: "get",
-    key: ["active-order"],
-    endpoint: "/api/dashboard/active-order",
-    isPrivate: true,
-  });
-};
-
 // Update user info == done
 export const useUpdateUserInfo = () => {
   const queryClient = useQueryClient();
@@ -98,10 +78,25 @@ export const useGetAllCategories = () => {
 };
 
 // get all products == done
-export const useAllProducts = (page, category_id, min_price, max_price, search, sort) => {
+export const useAllProducts = (
+  page,
+  category_id,
+  min_price,
+  max_price,
+  search,
+  sort,
+) => {
   return useApi({
     method: "get",
-    key: ["all-products", page, category_id, min_price, max_price, search, sort],
+    key: [
+      "all-products",
+      page,
+      category_id,
+      min_price,
+      max_price,
+      search,
+      sort,
+    ],
     endpoint: `/api/products/filter`,
     isPrivate: false,
     params: {
@@ -182,45 +177,6 @@ export const useCheckout = () => {
   });
 };
 
-// Add Promo code
-export const usePromoCode = () => {
-  return useApi({
-    method: "post",
-    key: ["add-promo-code"],
-    isPrivate: true,
-    endpoint: "/api/orders/promo-code/apply",
-    onSuccess: (res) => {
-      if (res?.success) {
-        toast.success(res?.message);
-      }
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
-// Send message
-export const useSendMessage = (order_id, request_id) => {
-  const queryClient = useQueryClient();
-
-  return useApi({
-    method: "post",
-    key: ["send-message", order_id, request_id],
-    isPrivate: true,
-    endpoint: `/api/proof-chat/${order_id}/${request_id}/message`,
-    onSuccess: (res) => {
-      if (res?.success) {
-        toast.success(res?.message);
-        queryClient.invalidateQueries("proof-chat");
-      }
-    },
-    onError: (err) => {
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
 // About us section content == done
 export const useAboutUsSectionContent = () => {
   return useApi({
@@ -251,3 +207,72 @@ export const useSocialMediaLinks = () => {
   });
 };
 
+// Get my orders == done
+export const useGetMyOrders = () => {
+  return useApi({
+    method: "get",
+    key: ["my-orders"],
+    endpoint: `/api/my-orders`,
+    isPrivate: true,
+  });
+};
+
+// Get order history == done
+export const useGetOrderHistory = () => {
+  return useApi({
+    method: "get",
+    key: ["order-history"],
+    endpoint: `/api/order-history`,
+    isPrivate: true,
+  });
+};
+
+// download invoice 
+export const useDownloadInvoice = (order_id) => {
+  return useApi({
+    method: "post",
+    key: ["download-invoice", order_id],
+    isPrivate: true,
+    enabled: !!order_id,
+    endpoint: `/api/order-invoice?order_id=${order_id}`,
+    axiosOptions: {
+      responseType: "blob", 
+    },
+    onError: (err) => {
+      toast.error("Failed to download invoice");
+      console.error(err);
+    },
+  });
+};
+// Get notifications == done
+export const useGetNotifications = () => {
+  return useApi({
+    method: "get",
+    key: ["notifications"],
+    endpoint: `/api/notifications`,
+    isPrivate: true,
+  });
+};
+
+// Get footer contents == done
+export const useGetFooterContents = () => {
+  return useApi({
+    method: "get",
+    key: ["footer-contents"],
+    endpoint: `/api/settings`,
+    isPrivate: false,
+  });
+};
+
+// send review == done
+export const useSendReview = () => {
+  return useApi({
+    method: "post",
+    key: ["send-review"],
+    isPrivate: true,
+    endpoint: "/api/reviews/store",
+    onError: (err) => {
+      toast.error(err?.response?.data?.message);
+    },
+  });
+};
