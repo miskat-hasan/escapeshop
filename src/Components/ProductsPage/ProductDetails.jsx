@@ -3,6 +3,7 @@ import { MinusSVG, PlusSVG, StarFillSVG, StarSVG } from "../Svg/SvgContainer";
 import { TbPackages } from "react-icons/tb";
 import { useCart } from "../../Context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const ProductDetails = ({ product }) => {
   const { addToCart } = useCart();
@@ -22,8 +23,11 @@ const ProductDetails = ({ product }) => {
   const increment = () => setQuantity((prev) => prev + 1);
   const decrement = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     addToCart(product, quantity);
+    toast.success(`${quantity} ${product?.name} added to cart`);
   };
 
   const handleBuyNow = () => {
