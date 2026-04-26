@@ -198,7 +198,7 @@ const ProductsPage = () => {
               {/* Search */}
               <div className="relative w-full flex items-center justify-end">
                 <input
-                  type="search"
+                  type="text"
                   value={searchInput}
                   onChange={(e) => setSearchInput(e.target.value)}
                   onKeyDown={handleSearchKeyDown}
@@ -206,10 +206,10 @@ const ProductsPage = () => {
                   placeholder="Search"
                 />
                 <button
-                  className="absolute right-2 sm:right-4"
+                  className="absolute right-2 sm:right-4 cursor-pointer group"
                   onClick={handleSearchSubmit}
                 >
-                  <SearchSVG className={"max-sm:size-5"} />
+                  <SearchSVG className={"max-sm:size-5 group-hover:text-primary"} />
                 </button>
               </div>
 

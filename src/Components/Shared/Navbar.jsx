@@ -130,26 +130,28 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
-              <button
-                className="cursor-pointer relative"
-                onClick={() => {
-                  setOpenNotificationMenu(!openNotificationMenu);
-                  setOpenMenu(false);
-                }}
-              >
-                <NotificationSVG
-                  className={
-                    openNotificationMenu &&
-                    "text-primary scale-105 transition-colors duration-300"
-                  }
-                />
-                {openNotificationMenu && (
-                  <NotificationDropdown
-                    openMenu={openNotificationMenu}
-                    onClose={() => setOpenNotificationMenu(false)}
+              {user && (
+                <button
+                  className="cursor-pointer relative"
+                  onClick={() => {
+                    setOpenNotificationMenu(!openNotificationMenu);
+                    setOpenMenu(false);
+                  }}
+                >
+                  <NotificationSVG
+                    className={
+                      openNotificationMenu &&
+                      "text-primary scale-105 transition-colors duration-300"
+                    }
                   />
-                )}
-              </button>
+                  {openNotificationMenu && (
+                    <NotificationDropdown
+                      openMenu={openNotificationMenu}
+                      onClose={() => setOpenNotificationMenu(false)}
+                    />
+                  )}
+                </button>
+              )}
             </div>
             {!user && (
               <div className="flex items-center gap-6">

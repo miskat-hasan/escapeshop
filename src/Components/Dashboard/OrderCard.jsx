@@ -1,12 +1,20 @@
 import React, { useState } from "react";
-import { useDownloadInvoice } from "../../Hooks/api/dashboard_api";
+import {
+  useCancelOrder,
+  useDownloadInvoice,
+} from "../../Hooks/api/dashboard_api";
 import ReviewModal from "./ReviewModal";
+import CancelModal from "./CancelOrderModal";
+import { toast } from "react-toastify";
 
 const OrderCard = ({ cardType = "order", order }) => {
   const { mutate: downloadInvoice, isPending: isDownloadingInvoice } =
     useDownloadInvoice(order?.id);
+  const { mutate: cancelOrderMutation, isPending: isCancellingOrder } =
+    useCancelOrder();
 
   const [reviewItem, setReviewItem] = useState(null);
+  const [showCancelModal, setShowCancelModal] = useState(false);
 
   const downloadInvoiceHandler = (orderId) => {
     downloadInvoice(orderId, {
@@ -26,6 +34,18 @@ const OrderCard = ({ cardType = "order", order }) => {
         window.URL.revokeObjectURL(url);
       },
     });
+  };
+
+  const handleCancelOrder = () => {
+    cancelOrderMutation(
+      { order_id: order?.id },
+      {
+        onSuccess: (data) => {
+          setShowCancelModal(false);
+          toast.success(data?.message || "Order cancelled successfully");
+        },
+      },
+    );
   };
 
   return (
@@ -103,7 +123,11 @@ const OrderCard = ({ cardType = "order", order }) => {
           )}
         </button>
         {cardType === "order" && (
-          <button className="flex w-[130px] md:w-[150px] px-3 py-2 justify-center items-center border border-secondary-100 rounded-lg bg-[#DF1C41]/10 text-[#DF1C41] text-sm md:text-base cursor-pointer hover:bg-[#DF1C41]/20 transition-colors">
+          <button
+            onClick={() => setShowCancelModal(true)}
+            disabled={isCancellingOrder}
+            className="flex w-[130px] md:w-[150px] px-3 py-2 justify-center items-center border border-secondary-100 rounded-lg bg-[#DF1C41]/10 text-[#DF1C41] text-sm md:text-base cursor-pointer hover:bg-[#DF1C41]/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             Cancel Order
           </button>
         )}
@@ -116,7 +140,6 @@ const OrderCard = ({ cardType = "order", order }) => {
             key={item?.id || index}
             className="flex flex-col sm:flex-row w-full p-2 sm:p-3 md:p-4 items-start gap-3 md:gap-4 self-stretch rounded-2xl border-[0.4px] border-secondary-100"
           >
-            {/* product image */}
             <div className="w-full sm:w-[141px] h-48 sm:h-[134px] rounded-lg border border-secondary-100 overflow-hidden shrink-0">
               <img
                 src={
@@ -128,7 +151,6 @@ const OrderCard = ({ cardType = "order", order }) => {
                 className="size-full object-cover"
               />
             </div>
-            {/* content */}
             <div className="space-y-1 flex-1 min-w-0">
               <p className="text-[#E7EBEC] sm:text-lg md:text-2xl font-medium leading-[150%]">
                 {item?.product?.name}
@@ -151,6 +173,14 @@ const OrderCard = ({ cardType = "order", order }) => {
           </div>
         ))}
       </div>
+
+      {showCancelModal && (
+        <CancelModal
+          onConfirm={handleCancelOrder}
+          onCancel={() => setShowCancelModal(false)}
+          isCancelling={isCancellingOrder}
+        />
+      )}
 
       {reviewItem && (
         <ReviewModal

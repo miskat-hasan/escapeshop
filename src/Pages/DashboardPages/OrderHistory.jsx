@@ -52,18 +52,17 @@ const OrderHistory = () => {
               {/* button row skeleton */}
               <div className="flex items-center justify-between px-4 md:px-6 py-4">
                 <div className="h-9 w-[100px] md:w-[120px] rounded-lg bg-white/10" />
-                
               </div>
               {/* item skeleton */}
               <div className="px-4 md:px-6 pb-4 md:pb-6 space-y-4">
-                <div className="flex gap-4 p-4 rounded-2xl border-[0.4px] border-secondary-100">
-                  <div className="w-[141px] h-[134px] rounded-lg bg-white/10 shrink-0" />
-                  <div className="flex-1 space-y-3 py-1">
-                    <div className="h-5 bg-white/10 rounded w-3/4" />
-                    <div className="h-5 bg-white/10 rounded w-1/3" />
-                    <div className="h-4 bg-white/10 rounded w-1/4" />
-                  </div>
-                <div className="h-9 w-[130px] md:w-[150px] rounded-lg bg-white/10" />
+                <div className="flex max-sm:flex-col gap-4 p-4 rounded-2xl border-[0.4px] border-secondary-100">
+                    <div className="w-full sm:w-[141px] h-[134px] rounded-lg bg-white/10 shrink-0" />
+                    <div className="flex-1 space-y-3 py-1">
+                      <div className="h-5 bg-white/10 rounded w-3/4" />
+                      <div className="h-5 bg-white/10 rounded w-1/3" />
+                      <div className="h-4 bg-white/10 rounded w-1/4" />
+                    </div>
+                  <div className="h-9 sm:w-[130px] md:w-[150px] rounded-lg bg-white/10" />
                 </div>
               </div>
             </div>
@@ -76,11 +75,7 @@ const OrderHistory = () => {
           </div>
         ) : (
           orderHistory?.data?.map((order) => (
-            <OrderCard
-              key={order.id}
-              cardType="order-history"
-              order={order}
-            />
+            <OrderCard key={order.id} cardType="order-history" order={order} />
           ))
         )}
       </div>
