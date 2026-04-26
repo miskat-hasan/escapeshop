@@ -2,10 +2,19 @@ import React from "react";
 import { LockSVG, OrderBoxSVG } from "../Svg/SvgContainer";
 import { useCart } from "../../Context/CartContext";
 
-const OrderSummary = ({ shipping, setShipping, isPending }) => {
+const OrderSummary = ({ shipping, setShipping, isPending, buyNowItem }) => {
   const { cartItems, subtotal } = useCart();
+
+  const activeItems = buyNowItem
+    ? [{ ...buyNowItem, quantity: buyNowItem.quantity }]
+    : cartItems;
+
+  const activeSubtotal = buyNowItem
+    ? Number(buyNowItem.sell_price) * buyNowItem.quantity
+    : subtotal;
+
   const shippingCost = shipping === "express" ? 5 : 0;
-  const total = subtotal + shippingCost;
+  const total = activeSubtotal + shippingCost;
 
   return (
     <div className="flex w-full p-4 md:p-6 flex-col items-center rounded-3xl border-[0.4px] border-[#C1C79E] bg-transparent h-fit">
@@ -36,7 +45,7 @@ const OrderSummary = ({ shipping, setShipping, isPending }) => {
       <div className="w-full h-px bg-[#EBECF0] my-3 md:my-4"></div>
 
       {/* Order items */}
-      {cartItems.map((item) => (
+      {activeItems.map((item) => (
         <div
           key={item.id}
           className="flex w-full items-center justify-between mb-3 md:mb-4"
@@ -61,7 +70,7 @@ const OrderSummary = ({ shipping, setShipping, isPending }) => {
           Sub Total :
         </p>
         <p className="text-white text-lg md:text-2xl font-semibold leading-[150%]">
-          ${subtotal.toFixed(2)}
+          ${activeSubtotal.toFixed(2)}
         </p>
       </div>
 
@@ -71,7 +80,7 @@ const OrderSummary = ({ shipping, setShipping, isPending }) => {
           Total :
         </p>
         <p className="text-white text-2xl md:text-[32px] font-semibold leading-[132%] tracking-[-0.64px]">
-          ${subtotal.toFixed(2)}
+          ${activeSubtotal.toFixed(2)}
         </p>
       </div>
 
@@ -133,6 +142,7 @@ const OrderSummary = ({ shipping, setShipping, isPending }) => {
         </p>
       </div>
 
+      {/* Submit button */}
       <div className="block mt-6 md:mt-8 w-full">
         <button
           type="submit"

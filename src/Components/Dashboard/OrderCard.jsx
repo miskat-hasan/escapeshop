@@ -140,7 +140,7 @@ const OrderCard = ({ cardType = "order", order }) => {
                 Quantity: {item?.quantity}
               </p>
             </div>
-            {cardType === "order-history" && (
+            {cardType !== "order" && (
               <button
                 onClick={() => setReviewItem(item)}
                 className="flex w-full sm:w-[130px] md:w-[150px] px-3 py-2 justify-center items-center border border-secondary-100 rounded-lg bg-[#84CC1633] text-[#E7EBEC] text-sm md:text-base cursor-pointer hover:bg-[#84CC1650] transition-colors"
