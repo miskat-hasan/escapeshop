@@ -10,8 +10,9 @@ import {
 import { useLogin, useSocialGoogleLogin } from "../../Hooks/api/auth_api";
 import { ImSpinner9 } from "react-icons/im";
 import { useGoogleLogin } from "@react-oauth/google";
+import axios from "axios";
 
-const Signup = () => {
+const SignIn = () => {
   const {
     register,
     handleSubmit,
@@ -39,24 +40,23 @@ const Signup = () => {
     onSuccess: async (tokenResponse) => {
       const token = tokenResponse.access_token;
       try {
-        // const { data } = await axios(
-        //   `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
-        //   {
-        //     headers: {
-        //       Authorization: `Bearer ${token}`,
-        //     },
-        //   },
-        // );
+        const { data } = await axios(
+          `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
 
         const payload = {
           token,
           provider: "google",
-          // first_name: data?.given_name,
-          // last_name: data?.family_name,
-          // email: data?.email,
+          name: data?.name,
+          email: data?.email,
+          avatar_path: data?.picture,
         };
         await googleLoginMutation(payload);
-        console.log(payload);
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
@@ -245,4 +245,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignIn;

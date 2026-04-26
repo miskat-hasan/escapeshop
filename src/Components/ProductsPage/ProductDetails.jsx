@@ -31,8 +31,14 @@ const ProductDetails = ({ product }) => {
   };
 
   const handleBuyNow = () => {
-    addToCart(product, quantity);
-    navigate("/cart");
+    navigate("/checkout", {
+      state: {
+        buyNowItem: {
+          ...product,
+          quantity,
+        },
+      },
+    });
   };
 
   return (
@@ -174,31 +180,11 @@ const ProductDetails = ({ product }) => {
 
               <button
                 onClick={handleBuyNow}
-                className="flex h-11 sm:h-12 px-4 py-3 justify-center items-center gap-2.5 self-stretch rounded-lg border border-[#C1C79E] bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-[150%] w-full"
+                className="flex h-11 sm:h-12 px-4 py-3 justify-center items-center gap-2.5 self-stretch rounded-lg border border-[#C1C79E] bg-[#C1C79E] text-[#051619] text-center text-base font-medium leading-[150%] w-full cursor-pointer hover:bg-transparent hover:text-[#C1C79E] transition duration-300"
               >
                 Buy Now
               </button>
             </div>
-
-            {/* <div className="max-lg:hidden grid-cols-4 sm:gap-2 xl:gap-4 mt-6 overflow-x-auto">
-              {product?.gallery?.map((item, i) => (
-                <button
-                  key={i}
-                  onClick={() => setSelectedImage(item?.image)}
-                  className={`rounded-xl overflow-hidden border-2 flex-1 h-20 ${
-                    selectedImage === item?.image
-                      ? "border-secondary-100"
-                      : "border-transparent"
-                  }`}
-                >
-                  <img
-                    src={import.meta.env.VITE_SITE_URL + "/" + item?.image}
-                    alt={`Thumbnail ${i + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div> */}
           </div>
         </div>
       </div>

@@ -19,11 +19,18 @@ const FieldError = ({ message }) =>
 
 const isLoggedIn = () => !!localStorage.getItem("token");
 
-const CustomerInformation = ({ mutate, shipping }) => {
+const CustomerInformation = ({ mutate, shipping, buyNowItem }) => {
   const navigate = useNavigate();
   const { cartItems, subtotal, clearCart } = useCart();
-
   const { user } = useAuth();
+
+  const activeItems = buyNowItem
+    ? [{ ...buyNowItem, quantity: buyNowItem.quantity }]
+    : cartItems;
+
+  const activeSubtotal = buyNowItem
+    ? Number(buyNowItem.sell_price) * buyNowItem.quantity
+    : subtotal;
 
   const {
     register,
@@ -33,7 +40,7 @@ const CustomerInformation = ({ mutate, shipping }) => {
   } = useForm({ mode: "onTouched" });
 
   useEffect(() => {
-    if(user) {
+    if (user) {
       reset({
         name: user?.name || "",
         email: user?.email || "",
@@ -45,9 +52,8 @@ const CustomerInformation = ({ mutate, shipping }) => {
         street: user?.street || "",
       });
     }
-  
-  }, [user, reset])
-  
+  }, [user, reset]);
+
   const onSubmit = (data) => {
     if (!isLoggedIn()) {
       navigate("/auth/login", { state: "/checkout" });
@@ -67,23 +73,22 @@ const CustomerInformation = ({ mutate, shipping }) => {
       street: data.street,
       notes: data.notes || "",
       shipping_method: shipping,
-      items: cartItems.map((item) => ({
+      items: activeItems.map((item) => ({
         product_id: item.id,
         quantity: item.quantity,
         price: item.sell_price,
       })),
-      subtotal: subtotal.toFixed(2),
+      subtotal: activeSubtotal.toFixed(2),
       shipping_cost: shippingCost.toFixed(2),
-      total: (subtotal + shippingCost).toFixed(2),
+      total: (activeSubtotal + shippingCost).toFixed(2),
     };
 
     mutate(payload, {
       onSuccess: () => {
-        clearCart();
+        if (!buyNowItem) clearCart();
         navigate("/order-confirmed");
       },
     });
-    // console.log(payload);
   };
 
   return (

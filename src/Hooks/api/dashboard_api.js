@@ -218,12 +218,15 @@ export const useGetMyOrders = () => {
 };
 
 // Get order history == done
-export const useGetOrderHistory = () => {
+export const useGetOrderHistory = (filter) => {
   return useApi({
     method: "get",
-    key: ["order-history"],
+    key: ["order-history", filter],
     endpoint: `/api/order-history`,
     isPrivate: true,
+    params: {
+      filter: filter || undefined,
+    },
   });
 };
 
