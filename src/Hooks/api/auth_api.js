@@ -160,7 +160,7 @@ export const useSocialGoogleLogin = () => {
   return useApi({
     method: "post",
     key: ["google-login"],
-    endpoint: "/api/social-login/google",
+    endpoint: "/api/social-login",
     onSuccess: (res) => {
       if (res?.success) {
         toast.success(res?.message);
