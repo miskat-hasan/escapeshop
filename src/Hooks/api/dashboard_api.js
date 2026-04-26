@@ -279,3 +279,16 @@ export const useSendReview = () => {
     },
   });
 };
+
+// cancel order == done
+export const useCancelOrder = () => {
+  return useApi({
+    method: "post",
+    key: ["cancel-order"],
+    isPrivate: true,
+    endpoint: "/api/payment-cancel",
+    onError: (err) => {
+      toast.error(err?.response?.data?.message);
+    },
+  });
+};
