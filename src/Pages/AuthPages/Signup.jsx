@@ -8,8 +8,10 @@ import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useRegister } from "../../Hooks/api/auth_api";
+import { useRegister, useSocialGoogleLogin } from "../../Hooks/api/auth_api";
 import { ImSpinner9 } from "react-icons/im";
+import axios from "axios";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,9 +24,12 @@ const Signup = () => {
   } = useForm();
 
   const { mutate, isPending } = useRegister();
+  const { mutateAsync: googleLoginMutation, isPending: googleLoginPending } =
+      useSocialGoogleLogin();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const password = watch("password");
 
   const onSubmit = (data) => {
@@ -39,6 +44,39 @@ const Signup = () => {
       },
     });
   };
+
+    const handleLoginWithGoogle = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      const token = tokenResponse.access_token;
+      console.log(tokenResponse)
+      console.log(token)
+      try {
+        const { data } = await axios(
+          `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        const payload = {
+          token,
+          provider: "google",
+          name: data?.name,
+          email: data?.email,
+          avatar_path: data?.picture,
+        };
+        await googleLoginMutation(payload);
+        console.log(token)
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+      }
+    },
+    onError: (error) => {
+      console.error("Google Login Failed:", error);
+    },
+  });
 
   return (
     <div className="relative min-h-screen bg-cover bg-bottom auth-bg">
@@ -216,10 +254,23 @@ const Signup = () => {
             </div>
 
             {/* GOOGLE LOGIN */}
-            <div className="flex h-12 sm:h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">
-              <GoogleSVG />
-              <span>Sign in with Google</span>
-            </div>
+            <button
+              type="button"
+              onClick={handleLoginWithGoogle}
+              disabled={googleLoginPending}
+              className="flex h-12 sm:h-[52px] py-3 px-6 w-full justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {googleLoginPending ? (
+                <span className="w-full flex gap-3 items-center justify-center">
+                  <ImSpinner9 className="animate-spin" />
+                </span>
+              ) : (
+                <>
+                  <GoogleSVG />
+                  <span>Sign in with Google</span>
+                </>
+              )}
+            </button>
 
             {/* APPLE LOGIN */}
             <div className="flex h-12 sm:h-[52px] py-3 px-6 justify-center items-center gap-[10px] self-stretch text-[#99A1AF] text-center text-base font-medium leading-6 rounded-xl border-[.5px] border-[#99A1AF] cursor-pointer hover:text-white hover:bg-secondary-100 transition duration-300">

@@ -39,6 +39,8 @@ const SignIn = () => {
   const handleLoginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const token = tokenResponse.access_token;
+      console.log(tokenResponse)
+      console.log(token)
       try {
         const { data } = await axios(
           `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
@@ -57,6 +59,7 @@ const SignIn = () => {
           avatar_path: data?.picture,
         };
         await googleLoginMutation(payload);
+        console.log(token)
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
