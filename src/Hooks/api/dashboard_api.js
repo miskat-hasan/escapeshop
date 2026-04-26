@@ -292,3 +292,13 @@ export const useCancelOrder = () => {
     },
   });
 };
+
+// Get country == done
+export const useGetCountry = () => {
+  return useApi({
+    method: "get",
+    key: ["country"],
+    endpoint: `/api/country`,
+    isPrivate: false,
+  });
+};

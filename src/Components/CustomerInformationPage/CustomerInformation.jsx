@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserSVG } from "../Svg/SvgContainer";
 import { useCart } from "../../Context/CartContext";
 import useAuth from "../../Hooks/useAuth";
+import { useGetCountry } from "../../Hooks/api/dashboard_api";
 
 const inputBase =
   "flex w-full h-12 sm:h-[72px] px-3 sm:p-6 items-center gap-2.5 self-stretch rounded-md sm:rounded-2xl border-[0.4px] bg-white/10 text-[#D1D5DC] text-sm sm:text-base font-normal leading-[150%] outline-none transition-colors placeholder:text-[#D1D5DC]/50";
@@ -23,6 +24,8 @@ const CustomerInformation = ({ mutate, shipping, buyNowItem }) => {
   const navigate = useNavigate();
   const { cartItems, subtotal, clearCart } = useCart();
   const { user } = useAuth();
+
+  const { data: countries, isLoading: isCountryLoading } = useGetCountry();
 
   const activeItems = buyNowItem
     ? [{ ...buyNowItem, quantity: buyNowItem.quantity }]
@@ -63,14 +66,14 @@ const CustomerInformation = ({ mutate, shipping, buyNowItem }) => {
     const shippingCost = shipping === "express" ? 5 : 0;
 
     const payload = {
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      country: data.country,
+      customer_name: data.name,
+      customer_email: data.email,
+      customer_phone: data.phone,
+      country_id: data.country,
       state: data.state,
       city: data.city,
       postcode: data.postcode,
-      street: data.street,
+      street_address: data.street,
       notes: data.notes || "",
       shipping_method: shipping,
       items: activeItems.map((item) => ({
@@ -163,10 +166,10 @@ const CustomerInformation = ({ mutate, shipping, buyNowItem }) => {
           placeholder="Enter your number..."
           {...register("phone", {
             required: "Phone number is required",
-            pattern: {
-              value: /^[+]?[\d\s\-().]{7,15}$/,
-              message: "Please enter a valid phone number",
-            },
+            // pattern: {
+            //   value: /^[+]?[\d\s\-().]{7,15}$/,
+            //   message: "Please enter a valid phone number",
+            // },
           })}
         />
         <FieldError message={errors.phone?.message} />
@@ -177,12 +180,69 @@ const CustomerInformation = ({ mutate, shipping, buyNowItem }) => {
         <p className="text-white text-base md:text-[18px] font-medium leading-[150%]">
           Country / Region <span className="text-[#DF1C41]">*</span>
         </p>
-        <input
-          type="text"
-          className={errors.country ? inputError : inputNormal}
-          placeholder="Enter your country..."
-          {...register("country", { required: "Country / Region is required" })}
-        />
+        <div className="relative w-full">
+          <select
+            className={`appearance-none w-full h-12 sm:h-[72px] px-3 sm:px-6 rounded-md sm:rounded-2xl border-[0.4px] bg-white/10 text-[#D1D5DC] text-sm sm:text-base font-normal leading-[150%] outline-none transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed ${
+              errors.country
+                ? "border-[#DF1C41] focus:border-[#DF1C41]"
+                : "border-[#5C787C] focus:border-[#C1C79E]"
+            }`}
+            disabled={isCountryLoading}
+            {...register("country", {
+              required: "Country / Region is required",
+            })}
+          >
+            <option value="" className="bg-[#0C353C] text-[#D1D5DC]">
+              {isCountryLoading
+                ? "Loading countries..."
+                : "Select your country..."}
+            </option>
+            {countries?.data?.map((country) => (
+              <option
+                key={country.id}
+                value={country.id}
+                className="bg-[#0C353C] text-[#D1D5DC]"
+              >
+                {country.name}
+              </option>
+            ))}
+          </select>
+          {/* chevron icon */}
+          <div className="pointer-events-none absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 text-[#D1D5DC]">
+            {isCountryLoading ? (
+              <svg
+                className="animate-spin size-4"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8z"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            )}
+          </div>
+        </div>
         <FieldError message={errors.country?.message} />
       </div>
 
