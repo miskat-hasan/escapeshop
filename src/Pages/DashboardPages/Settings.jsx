@@ -51,7 +51,7 @@ const Settings = () => {
             <input
               type={showCurrentPassword ? "text" : "password"}
               placeholder="Enter your current password"
-              className={`flex py-3.5 sm:py-5 px-11 sm:px-14 items-center gap-2 self-stretch rounded-xl border border-[#C1C79E] bg-transparent text-[#8FA2A5] text-base font-normal leading-6 w-full pr-10 ${
+              className={`flex py-3.5 sm:py-5 px-11 sm:px-14 items-center gap-2 self-stretch rounded-xl border border-secondary-100 bg-transparent text-[#8FA2A5] text-base font-normal leading-6 w-full pr-10 ${
                 errors.old_password && "border-red-400"
               } `}
               {...register("old_password", {
@@ -95,7 +95,7 @@ const Settings = () => {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Enter new password"
-              className={`flex py-3.5 sm:py-5 px-11 sm:px-14 items-center gap-2 self-stretch rounded-xl border border-[#C1C79E] bg-transparent text-[#8FA2A5] text-base font-normal leading-6 w-full pr-10 ${
+              className={`flex py-3.5 sm:py-5 px-11 sm:px-14 items-center gap-2 self-stretch rounded-xl border border-secondary-100 bg-transparent text-[#8FA2A5] text-base font-normal leading-6 w-full pr-10 ${
                 errors.password && "border-red-400"
               } `}
               {...register("password", {
@@ -138,7 +138,7 @@ const Settings = () => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               placeholder="Confirm your password"
-              className={`flex py-3.5 sm:py-5 px-11 sm:px-14 items-center gap-2 self-stretch rounded-xl border border-[#C1C79E] bg-transparent text-[#8FA2A5] text-base font-normal leading-6 w-full pr-10 ${
+              className={`flex py-3.5 sm:py-5 px-11 sm:px-14 items-center gap-2 self-stretch rounded-xl border border-secondary-100 bg-transparent text-[#8FA2A5] text-base font-normal leading-6 w-full pr-10 ${
                 errors.password_confirmation && "border-red-400"
               } `}
               {...register("password_confirmation", {
