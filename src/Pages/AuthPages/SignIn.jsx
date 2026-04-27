@@ -39,8 +39,6 @@ const SignIn = () => {
   const handleLoginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const token = tokenResponse.access_token;
-      console.log(tokenResponse)
-      console.log(token)
       try {
         const { data } = await axios(
           `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
@@ -59,7 +57,6 @@ const SignIn = () => {
           avatar_path: data?.picture,
         };
         await googleLoginMutation(payload);
-        console.log(token)
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
@@ -159,15 +156,20 @@ const SignIn = () => {
 
             {/* remember me */}
             <div className="flex items-center justify-between">
-              <label className="flex items-center gap-1 text-sm">
+              <div className="flex items-center gap-2">
                 <input
-                  name="remember"
                   type="checkbox"
+                  id="remember"
+                  className="accent-[#C1C79E] w-4 h-4 cursor-pointer"
                   {...register("remember")}
-                  className="cursor-pointer"
                 />
-                Keep me login
-              </label>
+                <label
+                  htmlFor="remember"
+                  className="text-[#D1D5DC] text-sm font-normal leading-[150%] cursor-pointer"
+                >
+                  Keep me login
+                </label>
+              </div>
               <Link
                 to={"/auth/forgot-password"}
                 className="text-[#99A1AF] text-right text-sm font-medium leading-[150%] hover:text-white transition duration-300"

@@ -25,7 +25,7 @@ const Signup = () => {
 
   const { mutate, isPending } = useRegister();
   const { mutateAsync: googleLoginMutation, isPending: googleLoginPending } =
-      useSocialGoogleLogin();
+    useSocialGoogleLogin();
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -45,11 +45,11 @@ const Signup = () => {
     });
   };
 
-    const handleLoginWithGoogle = useGoogleLogin({
+  const handleLoginWithGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const token = tokenResponse.access_token;
-      console.log(tokenResponse)
-      console.log(token)
+      console.log(tokenResponse);
+      console.log(token);
       try {
         const { data } = await axios(
           `${import.meta.env.VITE_GOOGLE_URL}/oauth2/v2/userinfo`,
@@ -68,7 +68,7 @@ const Signup = () => {
           avatar_path: data?.picture,
         };
         await googleLoginMutation(payload);
-        console.log(token)
+        console.log(token);
       } catch (error) {
         console.error("Error fetching user info:", error);
       }
@@ -220,6 +220,36 @@ const Signup = () => {
                 <p className="text-[#DF1C41] text-sm mt-1 flex items-center gap-1">
                   <AlertSVG />
                   {errors.password_confirmation.message}
+                </p>
+              )}
+            </div>
+
+            {/* age verification */}
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="age_verified"
+                  className="accent-[#C1C79E] w-4 h-4 cursor-pointer"
+                  {...register("age_verified", {
+                    required: "You must verify your age",
+                  })}
+                />
+                <label
+                  htmlFor="age_verified"
+                  className="text-[#D1D5DC] text-sm md:text-base font-normal leading-[150%] cursor-pointer"
+                >
+                  I am 21 or older
+                  {/* and I agree to the{" "}
+                <Link to="/terms" className="underline">
+                  Terms of Service
+                </Link> */}
+                </label>
+              </div>
+              {errors?.age_verified && (
+                <p className="text-[#DF1C41] text-sm mt-1 flex items-center gap-1">
+                  <AlertSVG />
+                  {errors?.age_verified?.message}
                 </p>
               )}
             </div>
